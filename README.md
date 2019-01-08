@@ -1,2 +1,10 @@
-# perforce-hth-aws
-Perforce P4D and Swarm Deployments to AWS by CloudFormation and SaltStack.    
+## A Perforce HTH Deployment for AWS
+
+###Python 2.7+
+
+  awacs
+
+  pip 
+
+  troposphere
+

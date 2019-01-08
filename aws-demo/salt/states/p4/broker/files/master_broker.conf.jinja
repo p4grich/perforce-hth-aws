@@ -1,0 +1,14 @@
+{%- set p4d_host = salt['mine.get']('p4d-host', 'network.interface_ip')['p4d-host'] -%}
+#
+#
+# Warning:  This file is managed by Salt. DO NOT EDIT. Any changes will be
+#           overridden.
+#
+
+target      = {{ p4d_host }}:1666;
+admin-email = admin@example.com;
+admin-phone = 0123456789;
+admin-name  = admin;
+listen      = 1666;
+directory   = /etc/perforce;
+logfile     = /var/log/perforce/p4broker.log;

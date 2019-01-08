@@ -1,0 +1,23 @@
+foundation prototype (+2 weeks):
+ - (X) AWS/CF template with 3 AMI config, networking rules, CIDR restriction, etc.
+ - (X) salt master/minion installation
+ - (X) static sized AMIs
+ - (X) "free" (unlicensed) perforce
+ - (X) R53 domain name/EIP association
+ - (I) dockerized swarm installation
+ - (X) salt "create instance" module
+ - (X) EBS/XFS management of p4d-host disk
+ - (X) cron checkpoints (local only)
+ 
+early availability (+6 weeks):
+ - (?) Small/medium/large deployment
+ - ( ) Backups to secondary EBS volume
+ - ( ) migratable to new CF stack deployment
+ - (I) SSL certificate management
+ - ( ) p4 license management
+ - (?) usage stats
+
+GA (+4 weeks):
+ - ( ) replica CF stack automation
+ - ( ) marketo integration
+ - ( ) early adopter feedback

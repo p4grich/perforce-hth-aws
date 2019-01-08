@@ -1,0 +1,3 @@
+# Rotate the log when its size reaches 10 MiB.
+# Configuration is in number of bytes.
+s10000000

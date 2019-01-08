@@ -1,0 +1,39 @@
+haproxy:
+  package:
+    name:     haproxy
+    refresh:  True
+    source:   vbernat/haproxy-1.5
+  service:
+    name:     haproxy
+    enable:   True
+  config_file:
+    path:     /etc/haproxy/haproxy.cfg
+    user:     root
+    group:    root
+    mode:     644
+    manage:   True
+    source:   salt://haproxy/files/haproxy.cfg.jinja
+  config:
+    global:
+      daemon:   True
+      chroot:   /var/lib/haproxy
+      pidfile:  /var/run/haproxy.pid
+      log:      127.0.0.1 local0
+      maxconn:  4000
+      stats:    socket /var/lib/haproxy/stats
+      user:     haproxy
+      group:    haproxy
+      additional_options:
+    defaults:
+      log:      global
+      stats:    False
+      maxconn:  4000
+      retries:  1
+      options:
+      timeouts:
+        - http-request  10s
+        - queue         1m
+        - connect       10s
+        - client        1m
+        - server        10m
+        - check         10s

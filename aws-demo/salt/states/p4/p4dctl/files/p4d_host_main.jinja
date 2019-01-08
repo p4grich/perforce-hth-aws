@@ -1,0 +1,17 @@
+Environment
+{
+  PATH              = /bin:/usr/bin:/usr/local/bin
+}
+
+p4d p4d-main
+{
+  Owner             = perforce
+  Execute           = /opt/perforce/sbin/p4d
+
+  Environment
+  {
+    P4PORT          = 1666
+    P4ROOT          = /p4/metadata/
+    PATH            = /bin:/usr/bin:/usr/local/bin:/opt/perforce/bin:/opt/perforce/sbin
+  }
+}

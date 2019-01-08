@@ -1,0 +1,18 @@
+{% import_yaml 'runit/defaults.yml' as default_settings %}
+
+{% set os_config = salt['grains.filter_by'](
+  {
+    'Debian': {},
+    'RedHat': {},
+    'default': {}
+  },
+  grain='os_family')
+%}
+
+{% do default_settings.runit.update(os_config) %}
+
+{% set runit = salt['pillar.get'](
+  'runit',
+  default=default_settings.runit,
+  merge=True)
+%}

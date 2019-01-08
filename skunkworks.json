@@ -1,0 +1,1573 @@
+{
+    "Conditions": {
+        "DevNotify": {
+            "Fn::Equals": [
+                {
+                    "Ref": "EnvironmentType"
+                },
+                "Development"
+            ]
+        },
+        "EvalNotify": {
+            "Fn::Equals": [
+                {
+                    "Ref": "EnvironmentType"
+                },
+                "Evaluationn"
+            ]
+        },
+        "ProdNotify": {
+            "Fn::Equals": [
+                {
+                    "Ref": "EnvironmentType"
+                },
+                "Production"
+            ]
+        }
+    },
+    "Description": "Perforce Helix Deployment for EC2",
+    "Mappings": {
+        "AWSInstanceType2Arch": {
+            "c1.medium": {
+                "Arch": "PV64"
+            },
+            "c1.xlarge": {
+                "Arch": "PV64"
+            },
+            "c3.2xlarge": {
+                "Arch": "HVM64"
+            },
+            "c3.4xlarge": {
+                "Arch": "HVM64"
+            },
+            "c3.8xlarge": {
+                "Arch": "HVM64"
+            },
+            "c3.large": {
+                "Arch": "HVM64"
+            },
+            "c3.xlarge": {
+                "Arch": "HVM64"
+            },
+            "c4.2xlarge": {
+                "Arch": "HVM64"
+            },
+            "c4.4xlarge": {
+                "Arch": "HVM64"
+            },
+            "c4.8xlarge": {
+                "Arch": "HVM64"
+            },
+            "c4.large": {
+                "Arch": "HVM64"
+            },
+            "c4.xlarge": {
+                "Arch": "HVM64"
+            },
+            "cc2.8xlarge": {
+                "Arch": "HVM64"
+            },
+            "cr1.8xlarge": {
+                "Arch": "HVM64"
+            },
+            "d2.2xlarge": {
+                "Arch": "HVM64"
+            },
+            "d2.4xlarge": {
+                "Arch": "HVM64"
+            },
+            "d2.8xlarge": {
+                "Arch": "HVM64"
+            },
+            "d2.xlarge": {
+                "Arch": "HVM64"
+            },
+            "g2.2xlarge": {
+                "Arch": "HVMG2"
+            },
+            "hi1.4xlarge": {
+                "Arch": "HVM64"
+            },
+            "hs1.8xlarge": {
+                "Arch": "HVM64"
+            },
+            "i2.2xlarge": {
+                "Arch": "HVM64"
+            },
+            "i2.4xlarge": {
+                "Arch": "HVM64"
+            },
+            "i2.8xlarge": {
+                "Arch": "HVM64"
+            },
+            "i2.xlarge": {
+                "Arch": "HVM64"
+            },
+            "m1.large": {
+                "Arch": "PV64"
+            },
+            "m1.medium": {
+                "Arch": "PV64"
+            },
+            "m1.small": {
+                "Arch": "PV64"
+            },
+            "m1.xlarge": {
+                "Arch": "PV64"
+            },
+            "m2.2xlarge": {
+                "Arch": "PV64"
+            },
+            "m2.4xlarge": {
+                "Arch": "PV64"
+            },
+            "m2.xlarge": {
+                "Arch": "PV64"
+            },
+            "m3.2xlarge": {
+                "Arch": "HVM64"
+            },
+            "m3.large": {
+                "Arch": "HVM64"
+            },
+            "m3.medium": {
+                "Arch": "HVM64"
+            },
+            "m3.xlarge": {
+                "Arch": "HVM64"
+            },
+            "r3.2xlarge": {
+                "Arch": "HVM64"
+            },
+            "r3.4xlarge": {
+                "Arch": "HVM64"
+            },
+            "r3.8xlarge": {
+                "Arch": "HVM64"
+            },
+            "r3.large": {
+                "Arch": "HVM64"
+            },
+            "r3.xlarge": {
+                "Arch": "HVM64"
+            },
+            "t1.micro": {
+                "Arch": "PV64"
+            },
+            "t2.medium": {
+                "Arch": "HVM64"
+            },
+            "t2.micro": {
+                "Arch": "HVM64"
+            },
+            "t2.small": {
+                "Arch": "HVM64"
+            }
+        },
+        "AWSRegionArch2AMI": {
+            "ap-northeast-1": {
+                "HVM64": "ami-cbf90ecb",
+                "HVMG2": "ami-6318e863",
+                "PV64": "ami-27f90e27"
+            },
+            "ap-southeast-1": {
+                "HVM64": "ami-68d8e93a",
+                "HVMG2": "ami-3807376a",
+                "PV64": "ami-acd9e8fe"
+            },
+            "ap-southeast-2": {
+                "HVM64": "ami-fd9cecc7",
+                "HVMG2": "ami-89790ab3",
+                "PV64": "ami-ff9cecc5"
+            },
+            "cn-north-1": {
+                "HVM64": "ami-f239abcb",
+                "HVMG2": "NOT_SUPPORTED",
+                "PV64": "ami-fa39abc3"
+            },
+            "eu-central-1": {
+                "HVM64": "ami-a8221fb5",
+                "HVMG2": "ami-7cd2ef61",
+                "PV64": "ami-ac221fb1"
+            },
+            "eu-west-1": {
+                "HVM64": "ami-a10897d6",
+                "HVMG2": "ami-d5bc24a2",
+                "PV64": "ami-bf0897c8"
+            },
+            "sa-east-1": {
+                "HVM64": "ami-b52890a8",
+                "HVMG2": "NOT_SUPPORTED",
+                "PV64": "ami-bb2890a6"
+            },
+            "us-east-1": {
+                "HVM64": "ami-1ecae776",
+                "HVMG2": "ami-8c6b40e4",
+                "PV64": "ami-1ccae774"
+            },
+            "us-west-1": {
+                "HVM64": "ami-d114f295",
+                "HVMG2": "ami-f31ffeb7",
+                "PV64": "ami-d514f291"
+            },
+            "us-west-2": {
+                "HVM64": "ami-e7527ed7",
+                "HVMG2": "ami-abbe919b",
+                "PV64": "ami-ff527ecf"
+            }
+        },
+        "Environments": {
+            "Development": {
+                "ValueTags": "Dev"
+            },
+            "Evaluation": {
+                "ValueTags": "Eval"
+            },
+            "Production": {
+                "ValueTags": "Prod"
+            }
+        }
+    },
+    "Metadata": {
+        "Comments": "Perforce Helix Deployment for EC2",
+        "LastUpdated": "Sep 14th 2016",
+        "UpdatedBy": "Graeme Rich",
+        "Version": "2016.1"
+    },
+    "Outputs": {
+        "AvailabilityZoneAppInstance": {
+            "Description": "AppInstance Deployed to Availability Zone.",
+            "Value": {
+                "Fn::GetAtt": [
+                    "AppInstance",
+                    "AvailabilityZone"
+                ]
+            }
+        },
+        "AvailabilityZoneMainInstance": {
+            "Description": "MainInstance Deployed to Availability Zone.",
+            "Value": {
+                "Fn::GetAtt": [
+                    "AppInstance",
+                    "AvailabilityZone"
+                ]
+            }
+        },
+        "AvailabilityZoneP4D": {
+            "Description": "P4D Deployed to Availability Zone.",
+            "Value": {
+                "Fn::GetAtt": [
+                    "P4D",
+                    "AvailabilityZone"
+                ]
+            }
+        },
+        "EnvironmentType": {
+            "Description": "Deployment Type.",
+            "Value": {
+                "Ref": "EnvironmentType"
+            }
+        },
+        "HostedZone": {
+            "Condition": "ProdNotify",
+            "Description": "Route 53 Domain.",
+            "Value": {
+                "Ref": "HostedZone"
+            }
+        },
+        "HostedZoneFQDN": {
+            "Condition": "ProdNotify",
+            "Description": "FQDN.",
+            "Value": {
+                "Ref": "HostRecord"
+            }
+        },
+        "P4PORT": {
+            "Description": "Perforce P4PORT.",
+            "Value": {
+                "Fn::If": [
+                    "ProdNotify",
+                    {
+                        "Fn::Join": [
+                            "",
+                            [
+                                {
+                                    "Ref": "HostRecord"
+                                },
+                                ":1666"
+                            ]
+                        ]
+                    },
+                    {
+                        "Fn::Join": [
+                            "",
+                            [
+                                {
+                                    "Fn::GetAtt": [
+                                        "MainInstance",
+                                        "PublicIp"
+                                    ]
+                                },
+                                ":1666"
+                            ]
+                        ]
+                    }
+                ]
+            }
+        },
+        "PrivateDnsNameAppInstance": {
+            "Condition": "DevNotify",
+            "Description": "Private Domain Name.",
+            "Value": {
+                "Fn::GetAtt": [
+                    "AppInstance",
+                    "PrivateDnsName"
+                ]
+            }
+        },
+        "PrivateDnsNameMainInstance": {
+            "Condition": "DevNotify",
+            "Description": "Private Domain Name.",
+            "Value": {
+                "Fn::GetAtt": [
+                    "MainInstance",
+                    "PrivateDnsName"
+                ]
+            }
+        },
+        "PrivateDnsNameP4D": {
+            "Condition": "DevNotify",
+            "Description": "Private Domain Name.",
+            "Value": {
+                "Fn::GetAtt": [
+                    "P4D",
+                    "PrivateDnsName"
+                ]
+            }
+        },
+        "PrivateIpAppInstance": {
+            "Condition": "DevNotify",
+            "Description": "Private IP Address for AppInstance.",
+            "Value": {
+                "Fn::GetAtt": [
+                    "AppInstance",
+                    "PrivateIp"
+                ]
+            }
+        },
+        "PrivateIpMainInstance": {
+            "Condition": "DevNotify",
+            "Description": "Private IP Address for MainInstance.",
+            "Value": {
+                "Fn::GetAtt": [
+                    "MainInstance",
+                    "PrivateIp"
+                ]
+            }
+        },
+        "PrivateIpP4D": {
+            "Condition": "DevNotify",
+            "Description": "Private IP Address for P4D.",
+            "Value": {
+                "Fn::GetAtt": [
+                    "P4D",
+                    "PrivateIp"
+                ]
+            }
+        },
+        "PublicDnsMainInstance": {
+            "Description": "Public Domain Name for your deployment.",
+            "Value": {
+                "Fn::If": [
+                    "ProdNotify",
+                    {
+                        "Ref": "HostRecord"
+                    },
+                    {
+                        "Fn::GetAtt": [
+                            "MainInstance",
+                            "PublicDnsName"
+                        ]
+                    }
+                ]
+            }
+        },
+        "PublicIp": {
+            "Description": "Public IP Address for your Deployment.",
+            "Value": {
+                "Fn::GetAtt": [
+                    "MainInstance",
+                    "PublicIp"
+                ]
+            }
+        },
+        "RegistrationEMailAddress": {
+            "Description": "Registration EMail Address.",
+            "Value": {
+                "Ref": "RegistrationEMailAddress"
+            }
+        },
+        "SiteName": {
+            "Condition": "ProdNotify",
+            "Description": "Site name.",
+            "Value": {
+                "Ref": "SiteName"
+            }
+        },
+        "URL": {
+            "Description": "Perforce Helix application URL.",
+            "Value": {
+                "Fn::If": [
+                    "ProdNotify",
+                    {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "http://",
+                                {
+                                    "Ref": "HostRecord"
+                                }
+                            ]
+                        ]
+                    },
+                    {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "http://",
+                                {
+                                    "Fn::GetAtt": [
+                                        "MainInstance",
+                                        "PublicDnsName"
+                                    ]
+                                }
+                            ]
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "Parameters": {
+        "AvailabilityZone": {
+            "Description": "[Required]:: AWS EC2 Availability Zone",
+            "Type": "AWS::EC2::AvailabilityZone::Name"
+        },
+        "EnvironmentType": {
+            "AllowedValues": [
+                "Production",
+                "Evaluation",
+                "Development"
+            ],
+            "ConstraintDescription": "Must specify Production, Evaluation, or Development.",
+            "Default": "Evaluation",
+            "Description": "[Required]:: Type of Environment to deploy: [Production]: Ready for preexisting Public Route53 Zone and Elastic IP Services. [Evaluation]: Ready for Software Evaluation at minimal costs. [Development]: Ready for Stack modifications.",
+            "Type": "String"
+        },
+        "HostedZone": {
+            "AllowedPattern": "^(?!-)[a-zA-Z0-9-.]{1,63}(?<!-)$|^$",
+            "ConstraintDescription": "Production:: Must be a valid Public Domain that is available in Route53 | Evaluation: NULL | Development: NULL",
+            "Description": "[Production]:: *The Domain of an pre-existing Amazon Route53 hosted zone. | [Evaluation]: Leave empty. | [Development]: Leave empty. | [Example]: perforce.com ",
+            "Type": "String"
+        },
+        "InstanceType": {
+            "AllowedValues": [
+                "t1.micro",
+                "t2.micro",
+                "t2.small",
+                "t2.medium",
+                "m1.small",
+                "m1.medium",
+                "m1.large",
+                "m1.xlarge",
+                "m2.xlarge",
+                "m2.2xlarge",
+                "m2.4xlarge",
+                "m3.medium",
+                "m3.large",
+                "m3.xlarge",
+                "m3.2xlarge",
+                "c1.medium",
+                "c1.xlarge",
+                "c3.large",
+                "c3.xlarge",
+                "c3.2xlarge",
+                "c3.4xlarge",
+                "c3.8xlarge",
+                "c4.large",
+                "c4.xlarge",
+                "c4.2xlarge",
+                "c4.4xlarge",
+                "c4.8xlarge",
+                "g2.2xlarge",
+                "r3.large",
+                "r3.xlarge",
+                "r3.2xlarge",
+                "r3.4xlarge",
+                "r3.8xlarge",
+                "i2.xlarge",
+                "i2.2xlarge",
+                "i2.4xlarge",
+                "i2.8xlarge",
+                "d2.xlarge",
+                "d2.2xlarge",
+                "d2.4xlarge",
+                "d2.8xlarge",
+                "hi1.4xlarge",
+                "hs1.8xlarge",
+                "cr1.8xlarge",
+                "cc2.8xlarge",
+                "cg1.4xlarge"
+            ],
+            "ConstraintDescription": "must be a valid EC2 instance type.",
+            "Default": "t2.micro",
+            "Description": "[Required]:: MainInstance EC2 instance type",
+            "Type": "String"
+        },
+        "InstanceTypeP4D": {
+            "AllowedValues": [
+                "t1.micro",
+                "t2.micro",
+                "t2.small",
+                "t2.medium",
+                "m1.small",
+                "m1.medium",
+                "m1.large",
+                "m1.xlarge",
+                "m2.xlarge",
+                "m2.2xlarge",
+                "m2.4xlarge",
+                "m3.medium",
+                "m3.large",
+                "m3.xlarge",
+                "m3.2xlarge",
+                "c1.medium",
+                "c1.xlarge",
+                "c3.large",
+                "c3.xlarge",
+                "c3.2xlarge",
+                "c3.4xlarge",
+                "c3.8xlarge",
+                "c4.large",
+                "c4.xlarge",
+                "c4.2xlarge",
+                "c4.4xlarge",
+                "c4.8xlarge",
+                "g2.2xlarge",
+                "r3.large",
+                "r3.xlarge",
+                "r3.2xlarge",
+                "r3.4xlarge",
+                "r3.8xlarge",
+                "i2.xlarge",
+                "i2.2xlarge",
+                "i2.4xlarge",
+                "i2.8xlarge",
+                "d2.xlarge",
+                "d2.2xlarge",
+                "d2.4xlarge",
+                "d2.8xlarge",
+                "hi1.4xlarge",
+                "hs1.8xlarge",
+                "cr1.8xlarge",
+                "cc2.8xlarge",
+                "cg1.4xlarge"
+            ],
+            "ConstraintDescription": "must be a valid EC2 instance type.",
+            "Default": "t2.micro",
+            "Description": "[Required]:: P4D Instance EC2 instance type",
+            "Type": "String"
+        },
+        "KeyName": {
+            "ConstraintDescription": "must be the name of an existing EC2 KeyPair.",
+            "Description": "[Required]:: Name of an EC2 KeyPair to enable SSH access to the instance.",
+            "Type": "AWS::EC2::KeyPair::KeyName"
+        },
+        "P4DSuperPass": {
+            "Description": "[Required]:: The P4D Super account password, 8 to 1024 characters in length",
+            "MaxLength": "1024",
+            "MinLength": "8",
+            "NoEcho": true,
+            "Type": "String"
+        },
+        "RegistrationEMailAddress": {
+            "AllowedPattern": "([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)",
+            "ConstraintDescription": "Must be a valid EMail Address",
+            "Description": "[Required]:: Your EMail Address used for License and Registration of Perforce Helix Software and Services",
+            "Type": "String"
+        },
+        "SSHLocation": {
+            "AllowedPattern": "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})",
+            "ConstraintDescription": "must be a valid IP CIDR range of the form x.x.x.x/x.",
+            "Default": "0.0.0.0/0",
+            "Description": "The IP address range that can be used to access the web server using SSH.",
+            "MaxLength": "18",
+            "MinLength": "9",
+            "Type": "String"
+        },
+        "SiteName": {
+            "AllowedPattern": "^[_A-Za-z0-9][-A-Za-z0-9]*[A-Za-z0-9]$|^$",
+            "ConstraintDescription": "Must be a valid HostName",
+            "Description": "[Production]:: *The DNS short name for an existing Amazon Route53 Domain | [Evaluation]: Leave empty. | [Development]: Leave empty. | [Example]: helix-cloud",
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "AppInstance": {
+            "DependsOn": [
+                "MainInstance"
+            ],
+            "Metadata": {
+                "AWS::CloudFormation::Init": {
+                    "SaltMinion": {
+                        "commands": {
+                            "SaltMinion": {
+                                "commands": {
+                                    "setupMinion": {
+                                        "command": "/tmp/init.sh 10.0.0.101 app-host"
+                                    }
+                                },
+                                "files": {
+                                    "/tmp/init.sh": {
+                                        "mode": "0755",
+                                        "source": "https://s3-us-west-2.amazonaws.com/perforce-ami-us-west-2/init.sh"
+                                    }
+                                }
+                            },
+                            "configSets": {
+                                "All": [
+                                    "SaltMinion"
+                                ]
+                            }
+                        }
+                    },
+                    "configSets": {
+                        "DeploySalt": [
+                            "SaltMinion"
+                        ]
+                    }
+                }
+            },
+            "Properties": {
+                "ImageId": {
+                    "Fn::FindInMap": [
+                        "AWSRegionArch2AMI",
+                        {
+                            "Ref": "AWS::Region"
+                        },
+                        {
+                            "Fn::FindInMap": [
+                                "AWSInstanceType2Arch",
+                                {
+                                    "Ref": "InstanceType"
+                                },
+                                "Arch"
+                            ]
+                        }
+                    ]
+                },
+                "InstanceType": {
+                    "Ref": "InstanceType"
+                },
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "NetworkInterfaces": [
+                    {
+                        "AssociatePublicIpAddress": "true",
+                        "DeleteOnTermination": "true",
+                        "DeviceIndex": "0",
+                        "GroupSet": [
+                            {
+                                "Ref": "VPCGroup"
+                            }
+                        ],
+                        "PrivateIpAddress": "10.0.0.51",
+                        "SubnetId": {
+                            "Ref": "PublicSubnet"
+                        }
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                " - ",
+                                [
+                                    {
+                                        "Fn::FindInMap": [
+                                            "Environments",
+                                            {
+                                                "Ref": "EnvironmentType"
+                                            },
+                                            "ValueTags"
+                                        ]
+                                    },
+                                    "Perforce Helix App Server",
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ],
+                "UserData": {
+                    "Fn::Base64": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "#!/bin/bash -v\n",
+                                "yum update -y aws-cfn-bootstrap\n",
+                                "# Install the files and packages from the metadata\n",
+                                "\n",
+                                "# Helper function\n",
+                                "function error_exit\n",
+                                "{\n",
+                                "  /opt/aws/bin/cfn-signal -e 1 -r \"$1\" '",
+                                {
+                                    "Ref": "WaitHandle"
+                                },
+                                "'\n",
+                                "  exit 1\n",
+                                "}\n",
+                                "\n",
+                                "# Install local config\n",
+                                "/opt/aws/bin/cfn-init -v ",
+                                "         --stack ",
+                                {
+                                    "Ref": "AWS::StackName"
+                                },
+                                "         --resource MainInstance ",
+                                "         --configsets All ",
+                                "         --access-key ",
+                                {
+                                    "Ref": "HostKeys"
+                                },
+                                "         --secret-key ",
+                                {
+                                    "Fn::GetAtt": [
+                                        "HostKeys",
+                                        "SecretAccessKey"
+                                    ]
+                                },
+                                "         --region ",
+                                {
+                                    "Ref": "AWS::Region"
+                                },
+                                "\n",
+                                "# Signal the status from cfn-init\n",
+                                "/opt/aws/bin/cfn-signal -e $? ",
+                                "         --stack ",
+                                {
+                                    "Ref": "AWS::StackName"
+                                },
+                                "         --resource MainInstance ",
+                                "         --region ",
+                                {
+                                    "Ref": "AWS::Region"
+                                },
+                                "\n",
+                                " > /var/tmp/cfn-init.output || error_exit 'Failed to run cfn-init'\n",
+                                "# All is well so signal success\n",
+                                "/opt/aws/bin/cfn-signal -e 0 -r \"Main Instance Stack setup complete\" '",
+                                {
+                                    "Ref": "WaitHandle"
+                                },
+                                "'\n"
+                            ]
+                        ]
+                    }
+                }
+            },
+            "Type": "AWS::EC2::Instance"
+        },
+        "HostKeys": {
+            "Properties": {
+                "UserName": {
+                    "Ref": "PerforceHelixIAMUser"
+                }
+            },
+            "Type": "AWS::IAM::AccessKey"
+        },
+        "HostRecord": {
+            "DependsOn": [
+                "MainEIP"
+            ],
+            "Properties": {
+                "Comment": "DNS name for my instance.",
+                "HostedZoneName": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            {
+                                "Ref": "HostedZone"
+                            },
+                            "."
+                        ]
+                    ]
+                },
+                "Name": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            {
+                                "Ref": "SiteName"
+                            },
+                            ".",
+                            {
+                                "Ref": "HostedZone"
+                            },
+                            "."
+                        ]
+                    ]
+                },
+                "ResourceRecords": [
+                    {
+                        "Fn::GetAtt": [
+                            "MainInstance",
+                            "PublicIp"
+                        ]
+                    }
+                ],
+                "TTL": "900",
+                "Type": "A"
+            },
+            "Type": "AWS::Route53::RecordSet"
+        },
+        "InternetGateway": {
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                " - ",
+                                [
+                                    {
+                                        "Fn::FindInMap": [
+                                            "Environments",
+                                            {
+                                                "Ref": "EnvironmentType"
+                                            },
+                                            "ValueTags"
+                                        ]
+                                    },
+                                    "Perforce Helix InternetGateway",
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ]
+            },
+            "Type": "AWS::EC2::InternetGateway"
+        },
+        "MainEIP": {
+            "Properties": {
+                "Domain": "vpc",
+                "InstanceId": {
+                    "Ref": "MainInstance"
+                }
+            },
+            "Type": "AWS::EC2::EIP"
+        },
+        "MainInstance": {
+            "DependsOn": [
+                "PublicRoute"
+            ],
+            "Metadata": {
+                "AWS::CloudFormation::Init": {
+                    "SaltMinion": {
+                        "commands": {
+                            "SaltMaster": {
+                                "commands": {
+                                    "setupMinion": {
+                                        "command": "/tmp/init.sh 10.0.0.101 master"
+                                    }
+                                },
+                                "files": {
+                                    "/tmp/init.sh": {
+                                        "mode": "0755",
+                                        "source": "https://s3-us-west-2.amazonaws.com/perforce-ami-us-west-2/init.sh"
+                                    },
+                                    "/tmp/key_wait.sh": {
+                                        "mode": "0755",
+                                        "source": "https://s3-us-west-2.amazonaws.com/perforce-ami-us-west-2/key_wait.sh"
+                                    }
+                                }
+                            },
+                            "configSets": {
+                                "All": [
+                                    "SaltMaster"
+                                ]
+                            }
+                        }
+                    },
+                    "configSets": {
+                        "DeploySalt": [
+                            "SaltMaster"
+                        ]
+                    }
+                }
+            },
+            "Properties": {
+                "ImageId": {
+                    "Fn::FindInMap": [
+                        "AWSRegionArch2AMI",
+                        {
+                            "Ref": "AWS::Region"
+                        },
+                        {
+                            "Fn::FindInMap": [
+                                "AWSInstanceType2Arch",
+                                {
+                                    "Ref": "InstanceType"
+                                },
+                                "Arch"
+                            ]
+                        }
+                    ]
+                },
+                "InstanceType": {
+                    "Ref": "InstanceType"
+                },
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "NetworkInterfaces": [
+                    {
+                        "AssociatePublicIpAddress": "true",
+                        "DeleteOnTermination": "true",
+                        "DeviceIndex": "0",
+                        "GroupSet": [
+                            {
+                                "Ref": "MainServerSecurityGroup"
+                            },
+                            {
+                                "Ref": "VPCGroup"
+                            }
+                        ],
+                        "PrivateIpAddress": "10.0.0.101",
+                        "SubnetId": {
+                            "Ref": "PublicSubnet"
+                        }
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                " - ",
+                                [
+                                    {
+                                        "Fn::FindInMap": [
+                                            "Environments",
+                                            {
+                                                "Ref": "EnvironmentType"
+                                            },
+                                            "ValueTags"
+                                        ]
+                                    },
+                                    "Perforce Helix Main Server",
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ],
+                "UserData": {
+                    "Fn::Base64": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "#!/bin/bash -v\n",
+                                "yum update -y aws-cfn-bootstrap\n",
+                                "# Install the files and packages from the metadata\n",
+                                "\n",
+                                "# Helper function\n",
+                                "function error_exit\n",
+                                "{\n",
+                                "  /opt/aws/bin/cfn-signal -e 1 -r \"$1\" '",
+                                {
+                                    "Ref": "WaitHandle"
+                                },
+                                "'\n",
+                                "  exit 1\n",
+                                "}\n",
+                                "\n",
+                                "# Install local config\n",
+                                "/opt/aws/bin/cfn-init -v ",
+                                "         --stack ",
+                                {
+                                    "Ref": "AWS::StackName"
+                                },
+                                "         --resource MainInstance ",
+                                "         --configsets All ",
+                                "         --access-key ",
+                                {
+                                    "Ref": "HostKeys"
+                                },
+                                "         --secret-key ",
+                                {
+                                    "Fn::GetAtt": [
+                                        "HostKeys",
+                                        "SecretAccessKey"
+                                    ]
+                                },
+                                "         --region ",
+                                {
+                                    "Ref": "AWS::Region"
+                                },
+                                "\n",
+                                "# Signal the status from cfn-init\n",
+                                "/opt/aws/bin/cfn-signal -e $? ",
+                                "         --stack ",
+                                {
+                                    "Ref": "AWS::StackName"
+                                },
+                                "         --resource MainInstance ",
+                                "         --region ",
+                                {
+                                    "Ref": "AWS::Region"
+                                },
+                                "\n",
+                                " > /var/tmp/cfn-init.output || error_exit 'Failed to run cfn-init'\n",
+                                "# All is well so signal success\n",
+                                "/opt/aws/bin/cfn-signal -e 0 -r \"Main Instance Stack setup complete\" '",
+                                {
+                                    "Ref": "WaitHandle"
+                                },
+                                "'\n"
+                            ]
+                        ]
+                    }
+                }
+            },
+            "Type": "AWS::EC2::Instance"
+        },
+        "MainServerSecurityGroup": {
+            "Properties": {
+                "GroupDescription": "Allow access from HTTP/HTTPS and SSH and P4D over SSL traffic",
+                "SecurityGroupIngress": [
+                    {
+                        "CidrIp": "0.0.0.0/0",
+                        "FromPort": "80",
+                        "IpProtocol": "tcp",
+                        "ToPort": "80"
+                    },
+                    {
+                        "CidrIp": {
+                            "Ref": "SSHLocation"
+                        },
+                        "FromPort": "22",
+                        "IpProtocol": "tcp",
+                        "ToPort": "22"
+                    },
+                    {
+                        "CidrIp": "0.0.0.0/0",
+                        "FromPort": "1667",
+                        "IpProtocol": "tcp",
+                        "ToPort": "1667"
+                    },
+                    {
+                        "CidrIp": "0.0.0.0/0",
+                        "FromPort": "443",
+                        "IpProtocol": "tcp",
+                        "ToPort": "443"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                " - ",
+                                [
+                                    {
+                                        "Fn::FindInMap": [
+                                            "Environments",
+                                            {
+                                                "Ref": "EnvironmentType"
+                                            },
+                                            "ValueTags"
+                                        ]
+                                    },
+                                    "Perforce Helix Main Server SecurityGroup",
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "VPC"
+                }
+            },
+            "Type": "AWS::EC2::SecurityGroup"
+        },
+        "P4D": {
+            "DependsOn": [
+                "MainInstance"
+            ],
+            "Metadata": {
+                "AWS::CloudFormation::Init": {
+                    "SaltMinion": {
+                        "commands": {
+                            "SaltMinion": {
+                                "commands": {
+                                    "setupMinion": {
+                                        "command": "/tmp/init.sh 10.0.0.101  p4d-host"
+                                    }
+                                },
+                                "files": {
+                                    "/tmp/init.sh": {
+                                        "mode": "0755",
+                                        "source": "https://s3-us-west-2.amazonaws.com/perforce-ami-us-west-2/init.sh"
+                                    }
+                                }
+                            },
+                            "configSets": {
+                                "All": [
+                                    "SaltMinion"
+                                ]
+                            }
+                        }
+                    },
+                    "configSets": {
+                        "DeploySalt": [
+                            "SaltMinion"
+                        ]
+                    }
+                }
+            },
+            "Properties": {
+                "ImageId": {
+                    "Fn::FindInMap": [
+                        "AWSRegionArch2AMI",
+                        {
+                            "Ref": "AWS::Region"
+                        },
+                        {
+                            "Fn::FindInMap": [
+                                "AWSInstanceType2Arch",
+                                {
+                                    "Ref": "InstanceType"
+                                },
+                                "Arch"
+                            ]
+                        }
+                    ]
+                },
+                "InstanceType": {
+                    "Ref": "InstanceTypeP4D"
+                },
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "NetworkInterfaces": [
+                    {
+                        "AssociatePublicIpAddress": "true",
+                        "DeleteOnTermination": "true",
+                        "DeviceIndex": "0",
+                        "GroupSet": [
+                            {
+                                "Ref": "VPCGroup"
+                            }
+                        ],
+                        "PrivateIpAddress": "10.0.0.201",
+                        "SubnetId": {
+                            "Ref": "PublicSubnet"
+                        }
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                " - ",
+                                [
+                                    {
+                                        "Fn::FindInMap": [
+                                            "Environments",
+                                            {
+                                                "Ref": "EnvironmentType"
+                                            },
+                                            "ValueTags"
+                                        ]
+                                    },
+                                    "Perforce Helix P4D Server",
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ],
+                "UserData": {
+                    "Fn::Base64": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "#!/bin/bash -v\n",
+                                "yum update -y aws-cfn-bootstrap\n",
+                                "# Install the files and packages from the metadata\n",
+                                "\n",
+                                "# Helper function\n",
+                                "function error_exit\n",
+                                "{\n",
+                                "  /opt/aws/bin/cfn-signal -e 1 -r \"$1\" '",
+                                {
+                                    "Ref": "WaitHandle"
+                                },
+                                "'\n",
+                                "  exit 1\n",
+                                "}\n",
+                                "\n",
+                                "# Install local config\n",
+                                "/opt/aws/bin/cfn-init -v ",
+                                "         --stack ",
+                                {
+                                    "Ref": "AWS::StackName"
+                                },
+                                "         --resource MainInstance ",
+                                "         --configsets All ",
+                                "         --access-key ",
+                                {
+                                    "Ref": "HostKeys"
+                                },
+                                "         --secret-key ",
+                                {
+                                    "Fn::GetAtt": [
+                                        "HostKeys",
+                                        "SecretAccessKey"
+                                    ]
+                                },
+                                "         --region ",
+                                {
+                                    "Ref": "AWS::Region"
+                                },
+                                "\n",
+                                "# Signal the status from cfn-init\n",
+                                "/opt/aws/bin/cfn-signal -e $? ",
+                                "         --stack ",
+                                {
+                                    "Ref": "AWS::StackName"
+                                },
+                                "         --resource MainInstance ",
+                                "         --region ",
+                                {
+                                    "Ref": "AWS::Region"
+                                },
+                                "\n",
+                                " > /var/tmp/cfn-init.output || error_exit 'Failed to run cfn-init'\n",
+                                "# All is well so signal success\n",
+                                "/opt/aws/bin/cfn-signal -e 0 -r \"Main Instance Stack setup complete\" '",
+                                {
+                                    "Ref": "WaitHandle"
+                                },
+                                "'\n"
+                            ]
+                        ]
+                    }
+                }
+            },
+            "Type": "AWS::EC2::Instance"
+        },
+        "PerforceHelixIAMUser": {
+            "Properties": {
+                "Path": "/",
+                "Policies": [
+                    {
+                        "PolicyDocument": {
+                            "Statement": [
+                                {
+                                    "Action": [
+                                        "route53:ChangeResourceRecordSets"
+                                    ],
+                                    "Effect": "Allow",
+                                    "Resource": [
+                                        "arn:aws:route53:::change/*"
+                                    ]
+                                }
+                            ]
+                        },
+                        "PolicyName": "PerforceHelixR53DNSPolicy"
+                    },
+                    {
+                        "PolicyDocument": {
+                            "Statement": [
+                                {
+                                    "Action": [
+                                        "cloudformation:DescribeStackResource"
+                                    ],
+                                    "Effect": "Allow",
+                                    "Resource": [
+                                        "*"
+                                    ]
+                                }
+                            ]
+                        },
+                        "PolicyName": "PerforceHelixDescribeStackResource"
+                    }
+                ]
+            },
+            "Type": "AWS::IAM::User"
+        },
+        "PublicRoute": {
+            "DependsOn": [
+                "InternetGateway"
+            ],
+            "Properties": {
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": {
+                    "Ref": "InternetGateway"
+                },
+                "RouteTableId": {
+                    "Ref": "PublicRouteTable"
+                }
+            },
+            "Type": "AWS::EC2::Route"
+        },
+        "PublicRouteTable": {
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                " - ",
+                                [
+                                    {
+                                        "Fn::FindInMap": [
+                                            "Environments",
+                                            {
+                                                "Ref": "EnvironmentType"
+                                            },
+                                            "ValueTags"
+                                        ]
+                                    },
+                                    "Perforce Helix PublicRouteTable",
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "VPC"
+                }
+            },
+            "Type": "AWS::EC2::RouteTable"
+        },
+        "PublicSubnet": {
+            "Properties": {
+                "CidrBlock": "10.0.0.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                " - ",
+                                [
+                                    {
+                                        "Fn::FindInMap": [
+                                            "Environments",
+                                            {
+                                                "Ref": "EnvironmentType"
+                                            },
+                                            "ValueTags"
+                                        ]
+                                    },
+                                    "Perforce Helix Subnet",
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "VPC"
+                }
+            },
+            "Type": "AWS::EC2::Subnet"
+        },
+        "RegionRecord": {
+            "DependsOn": [
+                "MainEIP"
+            ],
+            "Properties": {
+                "Comment": "DNS name for my instance.",
+                "HostedZoneName": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            {
+                                "Ref": "HostedZone"
+                            },
+                            "."
+                        ]
+                    ]
+                },
+                "Name": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            {
+                                "Ref": "SiteName"
+                            },
+                            ".",
+                            {
+                                "Ref": "AWS::Region"
+                            },
+                            ".",
+                            {
+                                "Ref": "HostedZone"
+                            },
+                            "."
+                        ]
+                    ]
+                },
+                "ResourceRecords": [
+                    {
+                        "Fn::GetAtt": [
+                            "MainInstance",
+                            "PublicIp"
+                        ]
+                    }
+                ],
+                "TTL": "900",
+                "Type": "A"
+            },
+            "Type": "AWS::Route53::RecordSet"
+        },
+        "SubnetRouteTableAssociation": {
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "PublicRouteTable"
+                },
+                "SubnetId": {
+                    "Ref": "PublicSubnet"
+                }
+            },
+            "Type": "AWS::EC2::SubnetRouteTableAssociation"
+        },
+        "VPC": {
+            "Properties": {
+                "CidrBlock": "10.0.0.0/16",
+                "EnableDnsHostnames": "true",
+                "EnableDnsSupport": "true",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                " - ",
+                                [
+                                    {
+                                        "Fn::FindInMap": [
+                                            "Environments",
+                                            {
+                                                "Ref": "EnvironmentType"
+                                            },
+                                            "ValueTags"
+                                        ]
+                                    },
+                                    "Perforce Helix VPC",
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ]
+            },
+            "Type": "AWS::EC2::VPC"
+        },
+        "VPCGatewayAttachment": {
+            "Properties": {
+                "InternetGatewayId": {
+                    "Ref": "InternetGateway"
+                },
+                "VpcId": {
+                    "Ref": "VPC"
+                }
+            },
+            "Type": "AWS::EC2::VPCGatewayAttachment"
+        },
+        "VPCGroup": {
+            "Properties": {
+                "GroupDescription": "Allow access to things on the VPC",
+                "SecurityGroupIngress": [
+                    {
+                        "CidrIp": "10.0.0.0/16",
+                        "FromPort": 0,
+                        "IpProtocol": "tcp",
+                        "ToPort": 65535
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                " - ",
+                                [
+                                    {
+                                        "Fn::FindInMap": [
+                                            "Environments",
+                                            {
+                                                "Ref": "EnvironmentType"
+                                            },
+                                            "ValueTags"
+                                        ]
+                                    },
+                                    "Perforce Helix VPC Group",
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "VPC"
+                }
+            },
+            "Type": "AWS::EC2::SecurityGroup"
+        },
+        "WaitCondition": {
+            "DependsOn": [
+                "P4D",
+                "MainInstance",
+                "AppInstance"
+            ],
+            "Properties": {
+                "Handle": {
+                    "Ref": "WaitHandle"
+                },
+                "Timeout": "350"
+            },
+            "Type": "AWS::CloudFormation::WaitCondition"
+        },
+        "WaitHandle": {
+            "Type": "AWS::CloudFormation::WaitConditionHandle"
+        }
+    }
+}

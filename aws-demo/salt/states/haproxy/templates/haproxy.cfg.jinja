@@ -1,0 +1,74 @@
+{%- set global    = config.get('global', {}) -%}
+{%- set defaults  = config.get('defaults', {}) -%}
+#
+#
+# Warning:  This file is managed by Salt. DO NOT EDIT. Any changes will be
+#           overridden.
+#
+# See the haproxy(1) manpage for details.
+
+# Define global rules that apply to all node definitions.
+global
+  {% if global.get('daemon', True) == True -%}
+  # Run haproxy as a daemon process.
+  daemon
+  {%- endif %}
+
+  # Set the haproxy jail directory. This allows the process to run in a safe
+  # mode, helping to prevent exploitations in the server.
+  chroot      {{ global.get('chroot', '/var/lib/haproxy') }}
+
+  # Set the process pidfile location.
+  pidfile     {{ global.get('pidfile', '/var/run/haproxy.pid') }}
+
+  # Config the log write destination.
+  log         {{ global.get('log', '127.0.0.1 local0') }}
+
+  # Set a global maximum of conncurrent connections overrideable by child
+  # configs.
+  maxconn     {{ global.get('maxconn', 4000) }}
+
+  # Configure write location of haproxy stats.
+  stats       {{ global.get('stats', 'socket /var/lib/haproxy/stats') }}
+
+  # Set the user and group of the haproxy process.
+  user        {{ global.get('user', 'haproxy') }}
+  group       {{ global.get('group', 'haproxy') }}
+
+  {% if global.additional_options -%}
+  {% for key, value in global.get('additional_options', {}).items() -%}
+  # Configure additional global options.
+  {{ key }}   {{ value }}
+  {%- endfor %}
+  {%- endif %}
+
+
+# Configure defaults for all following section definitions.
+defaults
+  # Configure the default log location. For example, a value of 'global' will
+  # use the globally configured logger.
+  log         {{ defaults.get('log', 'global') }}
+
+  # Configure stat aggregation and rendering.
+  {% if defaults.get('stats:enable', False) == True -%}
+  stats       {{ defaults.get('stats:permissions', 'enable') }}
+  {% else -%}
+  # stats       {{ defaults.get('stats:permissions', 'enable') }}
+  {%- endif %}
+
+  # Optionally override the max connections defined in the 'global' section.
+  maxconn     {{ defaults.get('maxconn', '4000') }}
+
+  # Default the number of retries to be made against a particular backend in
+  # the event initial connections fail.
+  retries     {{ defaults.get('retries', 1) }}
+
+  # Configure additional default options.
+  {% for option in defaults.get('options', []) -%}
+  option      {{ option }}
+  {%- endfor %}
+
+  # Configure default timeouts for connection types.
+  {% for timeout in defaults.get('timeouts', []) -%}
+  timeout     {{ timeout }}
+  {% endfor %}

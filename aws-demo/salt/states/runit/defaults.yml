@@ -1,0 +1,13 @@
+runit:
+  package:
+    name:         runit
+    version:      latest
+  package_source:
+    path:         /tmp/runit-2.1.2/
+    source:       http://smarden.org/runit/runit-2.1.2.tar.gz
+    source_hash:  sha512=a18773ebf1aa22305dd89ed67363165b9fcf86c192b2be4e268d08005dd82d51265160c637abe072f2f2e378c4b315a75bd3d3e602c3e75bdd451a3b0190f8cf
+  service:
+    name:         runsvdir
+    enable:       True
+  available_dir:  /etc/services-available
+  enabled_dir:    /etc/service

@@ -1,0 +1,2874 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Perforce Helix Deployment for AWS",
+  "Conditions": {
+    "ProdNotify": {
+      "Fn::Equals": [
+        {
+          "Ref": "EnvironmentType"
+        },
+        "Production"
+      ]
+    },
+    "EvalNotify": {
+      "Fn::Equals": [
+        {
+          "Ref": "EnvironmentType"
+        },
+        "Evaluation"
+      ]
+    },
+    "DevNotify": {
+      "Fn::Equals": [
+        {
+          "Ref": "EnvironmentType"
+        },
+        "Development"
+      ]
+    }
+  },
+  "Metadata": {
+    "AWS::CloudFormation::Designer": {
+      "de5f09d3-bd08-47ff-a666-9df0f48fb27d": {
+        "size": {
+          "width": 600,
+          "height": 350
+        },
+        "position": {
+          "x": 40,
+          "y": 120
+        },
+        "z": 1,
+        "embeds": [
+          "3cddc86c-cf7a-4d8b-b18c-19caee3dd39c",
+          "bbfa4c46-3b78-4794-aef1-26666bb77863",
+          "55575608-3326-439f-910e-775bce52cd01",
+          "7c798387-f8e7-4bf7-9588-93d035bc1344",
+          "e2299c0b-ceed-4fa3-9949-131e74bd5c3b",
+          "2f821a16-d170-4216-9baa-5a08ea83a3bc"
+        ]
+      },
+      "7c798387-f8e7-4bf7-9588-93d035bc1344": {
+        "size": {
+          "width": 410,
+          "height": 210
+        },
+        "position": {
+          "x": 40,
+          "y": 240
+        },
+        "z": 2,
+        "parent": "de5f09d3-bd08-47ff-a666-9df0f48fb27d",
+        "embeds": [
+          "d7fbeb02-b237-4fec-b356-3296c696abd6",
+          "7dec3d16-20db-4fb1-aa62-e3929c55c423",
+          "e99f9396-0b69-4f3f-ac8f-b676d2743c7c",
+          "fde97bbf-a7bf-4c5f-a77c-bd2e6c904b27",
+          "74e342ff-d292-4dfd-9f78-61873c063cbe"
+        ]
+      },
+      "d7fbeb02-b237-4fec-b356-3296c696abd6": {
+        "size": {
+          "width": 60,
+          "height": 60
+        },
+        "position": {
+          "x": 120,
+          "y": 300
+        },
+        "z": 3,
+        "parent": "7c798387-f8e7-4bf7-9588-93d035bc1344",
+        "embeds": [],
+        "dependson": [
+          "9d4044f4-9436-4ad0-98df-4c5976a5ad1f"
+        ],
+        "isrelatedto": [
+          "55575608-3326-439f-910e-775bce52cd01",
+          "3cddc86c-cf7a-4d8b-b18c-19caee3dd39c",
+          "4479f2c4-0d1b-4a9e-82c7-ddb40c48d995",
+          "ebfb6947-7ff1-49dc-a2ba-ddaaabee478d"
+        ]
+      },
+      "55575608-3326-439f-910e-775bce52cd01": {
+        "size": {
+          "width": 60,
+          "height": 60
+        },
+        "position": {
+          "x": 220,
+          "y": 150
+        },
+        "z": 2,
+        "parent": "de5f09d3-bd08-47ff-a666-9df0f48fb27d",
+        "embeds": []
+      },
+      "0b028277-3ce0-4fb5-903d-19337ab182dc": {
+        "size": {
+          "width": 60,
+          "height": 60
+        },
+        "position": {
+          "x": 680,
+          "y": 280
+        },
+        "z": 1,
+        "embeds": []
+      },
+      "1b801c2d-1cf5-4b8f-bdc0-93d786e252a0": {
+        "source": {
+          "id": "0b028277-3ce0-4fb5-903d-19337ab182dc"
+        },
+        "target": {
+          "id": "de5f09d3-bd08-47ff-a666-9df0f48fb27d"
+        },
+        "z": 1
+      },
+      "bbfa4c46-3b78-4794-aef1-26666bb77863": {
+        "size": {
+          "width": 130,
+          "height": 210
+        },
+        "position": {
+          "x": 470,
+          "y": 240
+        },
+        "z": 2,
+        "parent": "de5f09d3-bd08-47ff-a666-9df0f48fb27d",
+        "embeds": [
+          "9d4044f4-9436-4ad0-98df-4c5976a5ad1f"
+        ]
+      },
+      "9d4044f4-9436-4ad0-98df-4c5976a5ad1f": {
+        "size": {
+          "width": 60,
+          "height": 60
+        },
+        "position": {
+          "x": 500,
+          "y": 300
+        },
+        "z": 3,
+        "parent": "bbfa4c46-3b78-4794-aef1-26666bb77863",
+        "embeds": [],
+        "references": [
+          "0b028277-3ce0-4fb5-903d-19337ab182dc"
+        ],
+        "dependson": [
+          "0b028277-3ce0-4fb5-903d-19337ab182dc"
+        ]
+      },
+      "cf112fec-1e56-43c0-9053-e88a6c257321": {
+        "source": {
+          "id": "9d4044f4-9436-4ad0-98df-4c5976a5ad1f",
+          "selector": "g:nth-child(1) g:nth-child(4) g:nth-child(2) circle:nth-child(1)     ",
+          "port": "AWS::RefLink-AWS::EC2::InternetGateway/AWS::EC2::VPNGateway-GatewayId"
+        },
+        "target": {
+          "id": "0b028277-3ce0-4fb5-903d-19337ab182dc"
+        },
+        "z": 4
+      },
+      "22253eca-ad30-443a-89f7-572dbe77fc6f": {
+        "source": {
+          "id": "9d4044f4-9436-4ad0-98df-4c5976a5ad1f",
+          "selector": "g:nth-child(1) g:nth-child(4) g:nth-child(2) circle:nth-child(1)     ",
+          "port": "AWS::RefLink-AWS::EC2::InternetGateway/AWS::EC2::VPNGateway-GatewayId"
+        },
+        "target": {
+          "id": "0b028277-3ce0-4fb5-903d-19337ab182dc"
+        },
+        "z": 4
+      },
+      "fc20c4ef-c162-4444-823b-a85191747d13": {
+        "source": {
+          "id": "9d4044f4-9436-4ad0-98df-4c5976a5ad1f",
+          "selector": "g:nth-child(1) g:nth-child(4) g:nth-child(2) circle:nth-child(1)     ",
+          "port": "AWS::RefLink-AWS::EC2::InternetGateway/AWS::EC2::VPNGateway-GatewayId"
+        },
+        "target": {
+          "id": "0b028277-3ce0-4fb5-903d-19337ab182dc"
+        },
+        "z": 4
+      },
+      "3eb621a2-41b0-47ed-9fa2-0a7a2c4ac8ad": {
+        "source": {
+          "id": "9d4044f4-9436-4ad0-98df-4c5976a5ad1f",
+          "selector": "g:nth-child(1) g:nth-child(4) g:nth-child(2) circle:nth-child(1)     ",
+          "port": "AWS::RefLink-AWS::EC2::InternetGateway/AWS::EC2::VPNGateway-GatewayId"
+        },
+        "target": {
+          "id": "0b028277-3ce0-4fb5-903d-19337ab182dc"
+        },
+        "z": 4
+      },
+      "c0c149d9-59d9-407b-8841-4ec800213af0": {
+        "source": {
+          "id": "9d4044f4-9436-4ad0-98df-4c5976a5ad1f",
+          "selector": "g:nth-child(1) g:nth-child(4) g:nth-child(2) circle:nth-child(1)     ",
+          "port": "AWS::RefLink-AWS::EC2::InternetGateway/AWS::EC2::VPNGateway-GatewayId"
+        },
+        "target": {
+          "id": "0b028277-3ce0-4fb5-903d-19337ab182dc"
+        },
+        "z": 4
+      },
+      "85031ebb-2920-4e89-84aa-99d771598db7": {
+        "source": {
+          "id": "9d4044f4-9436-4ad0-98df-4c5976a5ad1f"
+        },
+        "target": {
+          "id": "0b028277-3ce0-4fb5-903d-19337ab182dc"
+        },
+        "z": 3
+      },
+      "fb1bd5dc-17ee-4668-b54d-628fa191bac3": {
+        "source": {
+          "id": "9d4044f4-9436-4ad0-98df-4c5976a5ad1f"
+        },
+        "target": {
+          "id": "0b028277-3ce0-4fb5-903d-19337ab182dc"
+        },
+        "z": 4
+      },
+      "b802d188-0a0d-483b-b5b3-4ebb569fca3d": {
+        "source": {
+          "id": "d7fbeb02-b237-4fec-b356-3296c696abd6"
+        },
+        "target": {
+          "id": "9d4044f4-9436-4ad0-98df-4c5976a5ad1f"
+        },
+        "z": 5
+      },
+      "de547ab1-d258-494c-9d54-303ce0b47bc2": {
+        "source": {
+          "id": "bbfa4c46-3b78-4794-aef1-26666bb77863"
+        },
+        "target": {
+          "id": "7c798387-f8e7-4bf7-9588-93d035bc1344"
+        },
+        "z": 2
+      },
+      "d0adcc42-0a42-43b1-902d-71c163572552": {
+        "source": {
+          "id": "9d4044f4-9436-4ad0-98df-4c5976a5ad1f",
+          "selector": "g:nth-child(1) g:nth-child(4) g:nth-child(5) circle:nth-child(1)     ",
+          "port": "AWS::DependencyLink-*"
+        },
+        "target": {
+          "id": "0b028277-3ce0-4fb5-903d-19337ab182dc"
+        },
+        "z": 4
+      },
+      "e99f9396-0b69-4f3f-ac8f-b676d2743c7c": {
+        "size": {
+          "width": 60,
+          "height": 60
+        },
+        "position": {
+          "x": 200,
+          "y": 300
+        },
+        "z": 3,
+        "parent": "7c798387-f8e7-4bf7-9588-93d035bc1344",
+        "embeds": [],
+        "dependson": [
+          "9d4044f4-9436-4ad0-98df-4c5976a5ad1f",
+          "d7fbeb02-b237-4fec-b356-3296c696abd6"
+        ],
+        "isrelatedto": [
+          "55575608-3326-439f-910e-775bce52cd01",
+          "75226638-90eb-49dd-8706-31520eb1239f",
+          "3cddc86c-cf7a-4d8b-b18c-19caee3dd39c",
+          "4479f2c4-0d1b-4a9e-82c7-ddb40c48d995",
+          "ebfb6947-7ff1-49dc-a2ba-ddaaabee478d"
+        ]
+      },
+      "75226638-90eb-49dd-8706-31520eb1239f": {
+        "size": {
+          "width": 60,
+          "height": 60
+        },
+        "position": {
+          "x": 300,
+          "y": 160
+        },
+        "z": 1,
+        "parent": "de5f09d3-bd08-47ff-a666-9df0f48fb27d",
+        "embeds": []
+      },
+      "728f2657-ca85-4cf7-90a0-117fab8d9a3e": {
+        "source": {
+          "id": "e99f9396-0b69-4f3f-ac8f-b676d2743c7c"
+        },
+        "target": {
+          "id": "9d4044f4-9436-4ad0-98df-4c5976a5ad1f"
+        },
+        "z": 3
+      },
+      "7dec3d16-20db-4fb1-aa62-e3929c55c423": {
+        "size": {
+          "width": 60,
+          "height": 60
+        },
+        "position": {
+          "x": 50,
+          "y": 300
+        },
+        "z": 3,
+        "parent": "7c798387-f8e7-4bf7-9588-93d035bc1344",
+        "embeds": [],
+        "dependson": [
+          "d7fbeb02-b237-4fec-b356-3296c696abd6"
+        ],
+        "isrelatedto": [
+          "3cddc86c-cf7a-4d8b-b18c-19caee3dd39c",
+          "4479f2c4-0d1b-4a9e-82c7-ddb40c48d995",
+          "ebfb6947-7ff1-49dc-a2ba-ddaaabee478d"
+        ]
+      },
+      "3cddc86c-cf7a-4d8b-b18c-19caee3dd39c": {
+        "size": {
+          "width": 60,
+          "height": 60
+        },
+        "position": {
+          "x": 120,
+          "y": 150
+        },
+        "z": 2,
+        "parent": "de5f09d3-bd08-47ff-a666-9df0f48fb27d",
+        "embeds": []
+      },
+      "4479f2c4-0d1b-4a9e-82c7-ddb40c48d995": {
+        "size": {
+          "width": 60,
+          "height": 60
+        },
+        "position": {
+          "x": 30,
+          "y": 510
+        },
+        "z": 1,
+        "embeds": []
+      },
+      "c44de952-cf40-47fb-bb08-40ba2abc8a81": {
+        "size": {
+          "width": 60,
+          "height": 60
+        },
+        "position": {
+          "x": 120,
+          "y": 510
+        },
+        "z": 1,
+        "embeds": []
+      },
+      "ebfb6947-7ff1-49dc-a2ba-ddaaabee478d": {
+        "size": {
+          "width": 60,
+          "height": 60
+        },
+        "position": {
+          "x": 210,
+          "y": 510
+        },
+        "z": 1,
+        "embeds": [],
+        "isrelatedto": [
+          "c44de952-cf40-47fb-bb08-40ba2abc8a81"
+        ]
+      },
+      "54482ef1-c453-4a92-9cee-b523b71a9247": {
+        "size": {
+          "width": 60,
+          "height": 60
+        },
+        "position": {
+          "x": 280,
+          "y": 510
+        },
+        "z": 1,
+        "embeds": [],
+        "dependson": [
+          "2f821a16-d170-4216-9baa-5a08ea83a3bc"
+        ],
+        "isrelatedto": [
+          "d7fbeb02-b237-4fec-b356-3296c696abd6"
+        ]
+      },
+      "e2299c0b-ceed-4fa3-9949-131e74bd5c3b": {
+        "size": {
+          "width": 60,
+          "height": 60
+        },
+        "position": {
+          "x": 360,
+          "y": 510
+        },
+        "z": 2,
+        "parent": "de5f09d3-bd08-47ff-a666-9df0f48fb27d",
+        "embeds": [],
+        "references": [
+          "4479f2c4-0d1b-4a9e-82c7-ddb40c48d995"
+        ],
+        "dependson": [
+          "e99f9396-0b69-4f3f-ac8f-b676d2743c7c",
+          "d7fbeb02-b237-4fec-b356-3296c696abd6",
+          "7dec3d16-20db-4fb1-aa62-e3929c55c423"
+        ]
+      },
+      "63b602db-2dd2-4911-9220-775ff7fea8f9": {
+        "size": {
+          "width": 60,
+          "height": 60
+        },
+        "position": {
+          "x": 430,
+          "y": 510
+        },
+        "z": 1,
+        "embeds": [],
+        "dependson": [
+          "2f821a16-d170-4216-9baa-5a08ea83a3bc"
+        ],
+        "isrelatedto": [
+          "e99f9396-0b69-4f3f-ac8f-b676d2743c7c",
+          "d7fbeb02-b237-4fec-b356-3296c696abd6"
+        ]
+      },
+      "2f821a16-d170-4216-9baa-5a08ea83a3bc": {
+        "size": {
+          "width": 60,
+          "height": 60
+        },
+        "position": {
+          "x": 500,
+          "y": 510
+        },
+        "z": 2,
+        "parent": "de5f09d3-bd08-47ff-a666-9df0f48fb27d",
+        "embeds": [],
+        "isconnectedto": [
+          "d7fbeb02-b237-4fec-b356-3296c696abd6"
+        ]
+      },
+      "e7baa254-9c68-48c2-9699-f41aa1c79319": {
+        "source": {
+          "id": "54482ef1-c453-4a92-9cee-b523b71a9247"
+        },
+        "target": {
+          "id": "2f821a16-d170-4216-9baa-5a08ea83a3bc"
+        },
+        "z": 4
+      },
+      "ec50305f-72d6-4d57-a743-8abeb9f2dc1f": {
+        "source": {
+          "id": "63b602db-2dd2-4911-9220-775ff7fea8f9"
+        },
+        "target": {
+          "id": "2f821a16-d170-4216-9baa-5a08ea83a3bc"
+        },
+        "z": 5
+      },
+      "74e342ff-d292-4dfd-9f78-61873c063cbe": {
+        "size": {
+          "width": 60,
+          "height": 60
+        },
+        "position": {
+          "x": 360,
+          "y": 300
+        },
+        "z": 3,
+        "parent": "7c798387-f8e7-4bf7-9588-93d035bc1344",
+        "embeds": [],
+        "dependson": [
+          "e99f9396-0b69-4f3f-ac8f-b676d2743c7c"
+        ],
+        "isrelatedto": [
+          "e99f9396-0b69-4f3f-ac8f-b676d2743c7c"
+        ]
+      },
+      "e582df4b-6414-4ab0-ac1e-ded44e1c941d": {
+        "source": {
+          "id": "74e342ff-d292-4dfd-9f78-61873c063cbe"
+        },
+        "target": {
+          "id": "e99f9396-0b69-4f3f-ac8f-b676d2743c7c"
+        },
+        "z": 4
+      },
+      "fde97bbf-a7bf-4c5f-a77c-bd2e6c904b27": {
+        "size": {
+          "width": 60,
+          "height": 60
+        },
+        "position": {
+          "x": 290,
+          "y": 300
+        },
+        "z": 3,
+        "parent": "7c798387-f8e7-4bf7-9588-93d035bc1344",
+        "embeds": [],
+        "dependson": [
+          "e99f9396-0b69-4f3f-ac8f-b676d2743c7c"
+        ],
+        "isrelatedto": [
+          "e99f9396-0b69-4f3f-ac8f-b676d2743c7c"
+        ]
+      },
+      "d1ae712a-0e36-493b-a750-658d1ff61f6a": {
+        "source": {
+          "id": "e99f9396-0b69-4f3f-ac8f-b676d2743c7c"
+        },
+        "target": {
+          "id": "fde97bbf-a7bf-4c5f-a77c-bd2e6c904b27"
+        },
+        "z": 3
+      },
+      "c1f4d59b-140e-4f71-9605-47a460209d2a": {
+        "source": {
+          "id": "e99f9396-0b69-4f3f-ac8f-b676d2743c7c"
+        },
+        "target": {
+          "id": "74e342ff-d292-4dfd-9f78-61873c063cbe"
+        },
+        "z": 3
+      }
+    },
+    "AWS::CloudFormation::Interface" : {
+      "ParameterGroups" : [
+        {
+          "Label" : { "default" : "P4D Configuration" },
+          "Parameters" : [ "P4DSuperPass", "RegistrationEMailAddress", "ArchiveVolumeMap", "ArchiveVolIopsForIo1", "MetaDataVolumeMap", "MetaDataVolIopsForIo1", "EnvironmentType" ]
+        },
+        {
+          "Label" : { "default": "AWS Configuration" },
+          "Parameters" : [ "AvailabilityZone", "KeyName", "SSHLocation", "InstanceTypeP4D", "InstanceType" ]
+        },
+        {
+          "Label" : { "default": "Production domain properties" },
+          "Parameters" : [ "HostedZone", "SiteName" ]
+        }
+      ],
+      "ParameterLabels" : {
+        "P4DSuperPass" : { "default" : "Perforce 'super' user password" },
+        "RegistrationEMailAddress" : { "default" : "Email address that you registered with" },
+        "ArchiveVolumeMap" : { "default" : "EBS volume for storing Perforce depot data" },
+        "ArchiveVolIopsForIo1" : { "default" : "For IOPS archive volumes, the IOPS rate" },
+        "MetaDataVolumeMap" : { "default" : "EBS volume for storing Perforce metadata" },
+        "MetaDataVolIopsForIo1" : { "default" : "For IOPS metadata volumes, the IOPS rate" },
+        "EnvironmentType" : { "default" : "Environment Type" },
+        "AvailabilityZone" : { "default" : "Availability zone for the stack deployment" },
+        "InstanceType" : { "default" : "Size of EC2 instance for non-P4D machines" },
+        "InstanceTypeP4D" : { "default" : "Size of EC2 instance for the P4D machine" },
+        "KeyName" : { "default" : "SSH key to initialize the instance access" },
+        "SSHLocation" : { "default" : "IP addresses that should be able to reach this stack" },
+        "HostedZone" : { "default" : "Registered domain" },
+        "SiteName" : { "default" : "DNS short name" }
+      }
+    }
+  },
+  "Resources": {
+    "MainEIP": {
+      "Type": "AWS::EC2::EIP",
+      "Condition": "ProdNotify",
+      "Properties": {
+        "InstanceId": {
+          "Ref": "MainInstance"
+        },
+        "Domain": "vpc"
+      },
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "2f821a16-d170-4216-9baa-5a08ea83a3bc"
+        }
+      }
+    },
+    "VPC": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": {
+              "Fn::Join": [
+                " - ",
+                [
+                  {
+                    "Fn::FindInMap": [
+                      "Environments",
+                      {
+                        "Ref": "EnvironmentType"
+                      },
+                      "ValueTags"
+                    ]
+                  },
+                  "Perforce Helix VPC",
+                  {
+                    "Ref": "AWS::StackName"
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "EnableDnsSupport": "true",
+        "EnableDnsHostnames": "true",
+        "CidrBlock": "10.0.0.0/16"
+      },
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "de5f09d3-bd08-47ff-a666-9df0f48fb27d"
+        }
+      }
+    },
+    "PublicSubnet": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "VpcId": {
+          "Ref": "VPC"
+        },
+        "CidrBlock": "10.0.0.0/24",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": {
+              "Fn::Join": [
+                " - ",
+                [
+                  {
+                    "Fn::FindInMap": [
+                      "Environments",
+                      {
+                        "Ref": "EnvironmentType"
+                      },
+                      "ValueTags"
+                    ]
+                  },
+                  "Perforce Helix Subnet",
+                  {
+                    "Ref": "AWS::StackName"
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "7c798387-f8e7-4bf7-9588-93d035bc1344"
+        }
+      }
+    },
+    "MainServerSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": {
+              "Fn::Join": [
+                " - ",
+                [
+                  {
+                    "Fn::FindInMap": [
+                      "Environments",
+                      {
+                        "Ref": "EnvironmentType"
+                      },
+                      "ValueTags"
+                    ]
+                  },
+                  "Perforce Helix Main Server SecurityGroup",
+                  {
+                    "Ref": "AWS::StackName"
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "VpcId": {
+          "Ref": "VPC"
+        },
+        "GroupDescription": "Allow access from HTTPS and SSH and P4D over SSL traffic",
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "22",
+            "ToPort": "22",
+            "CidrIp": {
+              "Ref": "SSHLocation"
+            }
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "1667",
+            "ToPort": "1667",
+            "CidrIp": {
+              "Ref": "SSHLocation"
+            }
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "443",
+            "ToPort": "443",
+            "CidrIp": {
+              "Ref": "SSHLocation"
+            }
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "9000",
+            "ToPort": "9000",
+            "CidrIp": {
+              "Ref": "SSHLocation"
+            }
+          }
+
+        ]
+      },
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "55575608-3326-439f-910e-775bce52cd01"
+        }
+      }
+    },
+    "InternetGateway": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "0b028277-3ce0-4fb5-903d-19337ab182dc"
+        }
+      },
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": {
+              "Fn::Join": [
+                " - ",
+                [
+                  {
+                    "Fn::FindInMap": [
+                      "Environments",
+                      {
+                        "Ref": "EnvironmentType"
+                      },
+                      "ValueTags"
+                    ]
+                  },
+                  "Perforce Helix InternetGateway",
+                  {
+                    "Ref": "AWS::StackName"
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "VPCGatewayAttachment": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "1b801c2d-1cf5-4b8f-bdc0-93d786e252a0"
+        }
+      },
+      "Properties": {
+        "InternetGatewayId": {
+          "Ref": "InternetGateway"
+        },
+        "VpcId": {
+          "Ref": "VPC"
+        }
+      }
+    },
+    "PublicRouteTable": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": {
+              "Fn::Join": [
+                " - ",
+                [
+                  {
+                    "Fn::FindInMap": [
+                      "Environments",
+                      {
+                        "Ref": "EnvironmentType"
+                      },
+                      "ValueTags"
+                    ]
+                  },
+                  "Perforce Helix PublicRouteTable",
+                  {
+                    "Ref": "AWS::StackName"
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "VpcId": {
+          "Ref": "VPC"
+        }
+      },
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "bbfa4c46-3b78-4794-aef1-26666bb77863"
+        }
+      }
+    },
+    "PublicRoute": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "RouteTableId": {
+          "Ref": "PublicRouteTable"
+        },
+        "GatewayId": {
+          "Ref": "InternetGateway"
+        }
+      },
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "9d4044f4-9436-4ad0-98df-4c5976a5ad1f"
+        }
+      },
+      "DependsOn": [
+        "InternetGateway"
+      ]
+    },
+    "SubnetRouteTableAssociation": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "PublicRouteTable"
+        },
+        "SubnetId": {
+          "Ref": "PublicSubnet"
+        }
+      },
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "de547ab1-d258-494c-9d54-303ce0b47bc2"
+        }
+      }
+    },
+    "MainInstance": {
+      "Type": "AWS::EC2::Instance",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": {
+              "Fn::Join": [
+                " - ",
+                [
+                  {
+                    "Fn::FindInMap": [
+                      "Environments",
+                      {
+                        "Ref": "EnvironmentType"
+                      },
+                      "ValueTags"
+                    ]
+                  },
+                  "Perforce Helix Main Server",
+                  {
+                    "Ref": "AWS::StackName"
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "InstanceType": {
+          "Ref": "InstanceType"
+        },
+        "ImageId": {
+          "Fn::FindInMap": [
+            "AWSRegionArch2AMI",
+            {
+              "Ref": "AWS::Region"
+            },
+            {
+              "Fn::FindInMap": [
+                "AWSInstanceType2Arch",
+                {
+                  "Ref": "InstanceType"
+                },
+                "Arch"
+              ]
+            }
+          ]
+        },
+        "KeyName": {
+          "Ref": "KeyName"
+        },
+        "NetworkInterfaces": [
+          {
+            "GroupSet": [
+              {
+                "Ref": "MainServerSecurityGroup"
+              },
+              {
+                "Ref": "VPCGroup"
+              }
+            ],
+            "AssociatePublicIpAddress": "true",
+            "DeviceIndex": "0",
+            "DeleteOnTermination": "true",
+            "PrivateIpAddress": "10.0.0.101",
+            "SubnetId": {
+              "Ref": "PublicSubnet"
+            }
+          }
+        ],
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "",
+              [
+                "#!/bin/bash -v\n",
+                "yum update -y aws-cfn-bootstrap\n",
+                "# Install the files and packages from the metadata\n",
+                "\n",
+                "# Helper function\n",
+                "function error_exit\n",
+                "{\n",
+                "  /opt/aws/bin/cfn-signal -e 1 -r \"$1\" '",
+                {
+                  "Ref": "WaitHandle"
+                },
+                "'\n",
+                "  exit 1\n",
+                "}\n",
+                "\n",
+                "# Install local config\n",
+                "/opt/aws/bin/cfn-init -v ",
+                "         --stack ",
+                {
+                  "Ref": "AWS::StackName"
+                },
+                "         --resource MainInstance ",
+                "         --configsets All ",
+                "         --region ",
+                {
+                  "Ref": "AWS::Region"
+                },
+                "\n",
+                "# Signal the status from cfn-init\n",
+                "/opt/aws/bin/cfn-signal -e $? ",
+                "         --stack ",
+                {
+                  "Ref": "AWS::StackName"
+                },
+                "         --resource MainInstance ",
+                "         --region ",
+                {
+                  "Ref": "AWS::Region"
+                },
+                "\n"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "d7fbeb02-b237-4fec-b356-3296c696abd6"
+        },
+        "AWS::CloudFormation::Init": {
+          "configSets": {
+            "All": [
+              "Install"
+            ]
+          },
+          "Install": {
+            "packages": {
+              "yum": {
+                "git": []
+              }
+            },
+            "commands": {
+              "01_pull_source": {
+                "command": "git clone -b master https://github.com/dougscheirer/aws-demo.git /var/lib/aws-demo"
+              },
+              "02_bootstrap": {
+                "command": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "bash /var/lib/aws-demo/setup/init.sh --ip 10.0.0.101 --id master --wait '",
+                      {
+                        "Ref": "WaitHandle"
+                      },
+                      "' --password '", 
+                      {
+                        "Ref": "P4DSuperPass"
+                      },
+                      "' --swarmurl aws-detect"
+                    ]
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "DependsOn": [
+        "PublicRoute"
+      ]
+    },
+    "P4D": {
+      "Type": "AWS::EC2::Instance",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": {
+              "Fn::Join": [
+                " - ",
+                [
+                  {
+                    "Fn::FindInMap": [
+                      "Environments",
+                      {
+                        "Ref": "EnvironmentType"
+                      },
+                      "ValueTags"
+                    ]
+                  },
+                  "Perforce Helix P4D Server",
+                  {
+                    "Ref": "AWS::StackName"
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "InstanceType": {
+          "Ref": "InstanceTypeP4D"
+        },
+        "ImageId": {
+          "Fn::FindInMap": [
+            "AWSRegionArch2AMI",
+            {
+              "Ref": "AWS::Region"
+            },
+            {
+              "Fn::FindInMap": [
+                "AWSInstanceType2Arch",
+                {
+                  "Ref": "InstanceType"
+                },
+                "Arch"
+              ]
+            }
+          ]
+        },
+        "KeyName": {
+          "Ref": "KeyName"
+        },
+        "NetworkInterfaces": [
+          {
+            "GroupSet": [
+              {
+                "Ref": "VPCGroup"
+              }
+            ],
+            "AssociatePublicIpAddress": "true",
+            "DeviceIndex": "0",
+            "DeleteOnTermination": "true",
+            "PrivateIpAddress": "10.0.0.201",
+            "SubnetId": {
+              "Ref": "PublicSubnet"
+            }
+          }
+        ],
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "",
+              [
+                "#!/bin/bash -v\n",
+                "yum update -y aws-cfn-bootstrap\n",
+                "# Install the files and packages from the metadata\n",
+                "\n",
+                "# Helper function\n",
+                "function error_exit\n",
+                "{\n",
+                "  /opt/aws/bin/cfn-signal -e 1 -r \"$1\" '",
+                {
+                  "Ref": "WaitHandle"
+                },
+                "'\n",
+                "  exit 1\n",
+                "}\n",
+                "\n",
+                "# Install local config\n",
+                "/opt/aws/bin/cfn-init -v ",
+                "         --stack ",
+                {
+                  "Ref": "AWS::StackName"
+                },
+                "         --resource P4D ",
+                "         --configsets All ",
+                "         --region ",
+                {
+                  "Ref": "AWS::Region"
+                },
+                "\n",
+                "# Signal the status from cfn-init\n",
+                "/opt/aws/bin/cfn-signal -e $? ",
+                "         --stack ",
+                {
+                  "Ref": "AWS::StackName"
+                },
+                "         --resource P4D ",
+                "         --region ",
+                {
+                  "Ref": "AWS::Region"
+                },
+                "\n"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "e99f9396-0b69-4f3f-ac8f-b676d2743c7c"
+        },
+        "AWS::CloudFormation::Init": {
+          "configSets": {
+            "All": [
+              "Install"
+            ]
+          },
+          "Install": {
+            "packages": {
+              "yum": {
+                "git": []
+              }
+            },
+            "commands": {
+              "01_pull_source": {
+                "command": "git clone -b master https://github.com/dougscheirer/aws-demo.git /var/lib/aws-demo"
+              },
+              "02_bootstrap": {
+                "command": "bash /var/lib/aws-demo/setup/init.sh --ip 10.0.0.101 --id p4d-host"
+              }
+            }
+          }
+        }
+      },
+      "DependsOn": [
+        "MainInstance"
+      ]
+    },
+    "AppInstance": {
+      "Type": "AWS::EC2::Instance",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": {
+              "Fn::Join": [
+                " - ",
+                [
+                  {
+                    "Fn::FindInMap": [
+                      "Environments",
+                      {
+                        "Ref": "EnvironmentType"
+                      },
+                      "ValueTags"
+                    ]
+                  },
+                  "Perforce Helix App Server",
+                  {
+                    "Ref": "AWS::StackName"
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "InstanceType": {
+          "Ref": "InstanceType"
+        },
+        "ImageId": {
+          "Fn::FindInMap": [
+            "AWSRegionArch2AMI",
+            {
+              "Ref": "AWS::Region"
+            },
+            {
+              "Fn::FindInMap": [
+                "AWSInstanceType2Arch",
+                {
+                  "Ref": "InstanceType"
+                },
+                "Arch"
+              ]
+            }
+          ]
+        },
+        "KeyName": {
+          "Ref": "KeyName"
+        },
+        "NetworkInterfaces": [
+          {
+            "GroupSet": [
+              {
+                "Ref": "VPCGroup"
+              }
+            ],
+            "AssociatePublicIpAddress": "true",
+            "DeviceIndex": "0",
+            "DeleteOnTermination": "true",
+            "PrivateIpAddress": "10.0.0.51",
+            "SubnetId": {
+              "Ref": "PublicSubnet"
+            }
+          }
+        ],
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "",
+              [
+                "#!/bin/bash -v\n",
+                "yum update -y aws-cfn-bootstrap\n",
+                "# Install the files and packages from the metadata\n",
+                "\n",
+                "# Helper function\n",
+                "function error_exit\n",
+                "{\n",
+                "  /opt/aws/bin/cfn-signal -e 1 -r \"$1\" '",
+                {
+                  "Ref": "WaitHandle"
+                },
+                "'\n",
+                "  exit 1\n",
+                "}\n",
+                "\n",
+                "# Install local config\n",
+                "/opt/aws/bin/cfn-init -v ",
+                "         --stack ",
+                {
+                  "Ref": "AWS::StackName"
+                },
+                "         --resource AppInstance ",
+                "         --configsets All ",
+                "         --region ",
+                {
+                  "Ref": "AWS::Region"
+                },
+                "\n",
+                "# Signal the status from cfn-init\n",
+                "/opt/aws/bin/cfn-signal -e $? ",
+                "         --stack ",
+                {
+                  "Ref": "AWS::StackName"
+                },
+                "         --resource AppInstance ",
+                "         --region ",
+                {
+                  "Ref": "AWS::Region"
+                },
+                "\n"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "7dec3d16-20db-4fb1-aa62-e3929c55c423"
+        },
+        "AWS::CloudFormation::Init": {
+          "configSets": {
+            "All": [
+              "Install"
+            ]
+          },
+          "Install": {
+            "packages": {
+              "yum": {
+                "git": []
+              }
+            },
+            "commands": {
+              "01_pull_source": {
+                "command": "git clone -b master https://github.com/dougscheirer/aws-demo.git /var/lib/aws-demo"
+              },
+              "02_bootstrap": {
+                "command": "bash /var/lib/aws-demo/setup/init.sh --ip 10.0.0.101 --id app-host"
+              }
+            }
+          }
+        }
+      },
+      "DependsOn": [
+        "MainInstance"
+      ]
+    },
+    "VPCGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": {
+              "Fn::Join": [
+                " - ",
+                [
+                  {
+                    "Fn::FindInMap": [
+                      "Environments",
+                      {
+                        "Ref": "EnvironmentType"
+                      },
+                      "ValueTags"
+                    ]
+                  },
+                  "Perforce Helix VPC Group",
+                  {
+                    "Ref": "AWS::StackName"
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "VpcId": {
+          "Ref": "VPC"
+        },
+        "GroupDescription": "Allow access to things on the VPC",
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 0,
+            "ToPort": 65535,
+            "CidrIp": "10.0.0.0/16"
+          }
+        ]
+      },
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "3cddc86c-cf7a-4d8b-b18c-19caee3dd39c"
+        }
+      }
+    },
+    "RegionRecord": {
+      "Type": "AWS::Route53::RecordSet",
+      "Condition": "ProdNotify",
+      "Properties": {
+        "HostedZoneName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "HostedZone"
+              },
+              "."
+            ]
+          ]
+        },
+        "Comment": "DNS name for my instance.",
+        "Name": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "SiteName"
+              },
+              ".",
+              {
+                "Ref": "AWS::Region"
+              },
+              ".",
+              {
+                "Ref": "HostedZone"
+              },
+              "."
+            ]
+          ]
+        },
+        "Type": "A",
+        "TTL": "900",
+        "ResourceRecords": [
+          {
+            "Fn::GetAtt": [
+              "MainInstance",
+              "PublicIp"
+            ]
+          }
+        ]
+      },
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "63b602db-2dd2-4911-9220-775ff7fea8f9"
+        }
+      },
+      "DependsOn": [
+        "MainEIP"
+      ]
+    },
+    "HostRecord": {
+      "Type": "AWS::Route53::RecordSet",
+      "Condition": "ProdNotify",
+      "Properties": {
+        "HostedZoneName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "HostedZone"
+              },
+              "."
+            ]
+          ]
+        },
+        "Comment": "DNS name for my instance.",
+        "Name": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "SiteName"
+              },
+              ".",
+              {
+                "Ref": "HostedZone"
+              },
+              "."
+            ]
+          ]
+        },
+        "Type": "A",
+        "TTL": "900",
+        "ResourceRecords": [
+          {
+            "Fn::GetAtt": [
+              "MainInstance",
+              "PublicIp"
+            ]
+          }
+        ]
+      },
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "54482ef1-c453-4a92-9cee-b523b71a9247"
+        }
+      },
+      "DependsOn": [
+        "MainEIP"
+      ]
+    },
+    "WaitHandle": {
+      "Type": "AWS::CloudFormation::WaitConditionHandle",
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "4479f2c4-0d1b-4a9e-82c7-ddb40c48d995"
+        }
+      }
+    },
+    "WaitCondition": {
+      "Type": "AWS::CloudFormation::WaitCondition",
+      "DependsOn": [
+        "P4D",
+        "MainInstance",
+        "AppInstance"
+      ],
+      "Properties": {
+        "Handle": {
+          "Ref": "WaitHandle"
+        },
+        "Timeout": "900"
+      },
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "e2299c0b-ceed-4fa3-9949-131e74bd5c3b"
+        }
+      }
+    },
+    "P4DArchiveVolume": {
+      "Type": "AWS::EC2::Volume",
+      "Properties": {
+        "AutoEnableIO": "False",
+        "AvailabilityZone": {
+          "Fn::GetAtt": [
+            "P4D",
+            "AvailabilityZone"
+          ]
+        },
+        "Encrypted": "False",
+        "Iops": {
+          "Ref": "ArchiveVolIopsForIo1"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": {
+              "Fn::Join": [
+                " - ",
+                [
+                  {
+                    "Fn::FindInMap": [
+                      "Environments",
+                      {
+                        "Ref": "EnvironmentType"
+                      },
+                      "ValueTags"
+                    ]
+                  },
+                  "P4D Archive Volume",
+                  {
+                    "Ref": "AWS::StackName"
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Size": {
+          "Fn::FindInMap": [
+            "VolumeTypeMap",
+            {
+              "Ref": "ArchiveVolumeMap"
+            },
+            "VolumeSize"
+          ]
+        },
+        "VolumeType": {
+          "Fn::FindInMap": [
+            "VolumeTypeMap",
+            {
+              "Ref": "ArchiveVolumeMap"
+            },
+            "VolumeType"
+          ]
+        }
+      },
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "74e342ff-d292-4dfd-9f78-61873c063cbe"
+        }
+      },
+      "DependsOn": [
+        "P4D"
+      ]
+    },
+    "P4DArchiveDev": {
+      "Type": "AWS::EC2::VolumeAttachment",
+      "Properties": {
+        "InstanceId": {
+          "Ref": "P4D"
+        },
+        "VolumeId": {
+          "Ref": "P4DArchiveVolume"
+        },
+        "Device": "/dev/sdp"
+      },
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "c1f4d59b-140e-4f71-9605-47a460209d2a"
+        }
+      }
+    },
+    "P4DMetaDataVolume": {
+      "Type": "AWS::EC2::Volume",
+      "Properties": {
+        "AutoEnableIO": "False",
+        "AvailabilityZone": {
+          "Fn::GetAtt": [
+            "P4D",
+            "AvailabilityZone"
+          ]
+        },
+        "Encrypted": "False",
+        "Iops": {
+          "Ref": "MetaDataVolIopsForIo1"
+        },
+        "Size": {
+          "Fn::FindInMap": [
+            "VolumeTypeMap",
+            {
+              "Ref": "MetaDataVolumeMap"
+            },
+            "VolumeSize"
+          ]
+        },
+        "VolumeType": {
+          "Fn::FindInMap": [
+            "VolumeTypeMap",
+            {
+              "Ref": "MetaDataVolumeMap"
+            },
+            "VolumeType"
+          ]
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": {
+              "Fn::Join": [
+                " - ",
+                [
+                  {
+                    "Fn::FindInMap": [
+                      "Environments",
+                      {
+                        "Ref": "EnvironmentType"
+                      },
+                      "ValueTags"
+                    ]
+                  },
+                  "P4D MetaData Volume",
+                  {
+                    "Ref": "AWS::StackName"
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "DependsOn": [
+        "P4D"
+      ],
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "fde97bbf-a7bf-4c5f-a77c-bd2e6c904b27"
+        }
+      }
+    },
+    "P4DMetaDataDev": {
+      "Type": "AWS::EC2::VolumeAttachment",
+      "Properties": {
+        "InstanceId": {
+          "Ref": "P4D"
+        },
+        "VolumeId": {
+          "Ref": "P4DMetaDataVolume"
+        },
+        "Device": "/dev/sdm"
+      },
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "d1ae712a-0e36-493b-a750-658d1ff61f6a"
+        }
+      }
+    }
+  },
+  "Parameters": {
+    "ArchiveVolumeMap": {
+      "Description": "[Required]:: P4D EBS Archive Volume in GiB:: General Purpose SSD: gp2, Provisioned IOPS SSD: io1, Throughput Optimized HDD: st1, Cold HDD **sc1. **Not Tested, 1: https://aws.amazon.com/ebs/pricing/ 2: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html",
+      "Type": "String",
+      "Default": "gp2-20GB",
+      "AllowedValues": [
+        "gp2-20GB",
+        "gp2-50GB",
+        "gp2-80GB",
+        "gp2-100GB",
+        "gp2-200GB",
+        "gp2-300GB",
+        "gp2-400GB",
+        "gp2-500GB",
+        "gp2-600GB",
+        "gp2-700GB",
+        "gp2-800GB",
+        "gp2-900GB",
+        "gp2-1000GB",
+        "gp2-2000GB",
+        "gp2-3000GB",
+        "gp2-4000GB",
+        "gp2-5000GB",
+        "gp2-6000GB",
+        "gp2-7000GB",
+        "gp2-8000GB",
+        "gp2-9000GB",
+        "gp2-10000GB",
+        "gp2-11000GB",
+        "gp2-12000GB",
+        "gp2-13000GB",
+        "gp2-14000GB",
+        "gp2-15000GB",
+        "gp2-16000GB",
+        "io1-20GB",
+        "io1-50GB",
+        "io1-80GB",
+        "io1-100GB",
+        "io1-200GB",
+        "io1-300GB",
+        "io1-400GB",
+        "io1-500GB",
+        "io1-600GB",
+        "io1-700GB",
+        "io1-800GB",
+        "io1-900GB",
+        "io1-1000GB",
+        "io1-2000GB",
+        "io1-3000GB",
+        "io1-4000GB",
+        "io1-5000GB",
+        "io1-6000GB",
+        "io1-7000GB",
+        "io1-8000GB",
+        "io1-9000GB",
+        "io1-10000GB",
+        "io1-11000GB",
+        "io1-12000GB",
+        "io1-13000GB",
+        "io1-14000GB",
+        "io1-15000GB",
+        "io1-16000GB",
+        "st1-500GB",
+        "st1-600GB",
+        "st1-700GB",
+        "st1-800GB",
+        "st1-900GB",
+        "st1-1000GB",
+        "st1-2000GB",
+        "st1-3000GB",
+        "st1-4000GB",
+        "st1-5000GB",
+        "st1-6000GB",
+        "st1-7000GB",
+        "st1-8000GB",
+        "st1-9000GB",
+        "st1-10000GB",
+        "st1-11000GB",
+        "st1-12000GB",
+        "st1-13000GB",
+        "st1-14000GB",
+        "st1-15000GB",
+        "st1-16000GB",
+        "sc1-500GB",
+        "sc1-600GB",
+        "sc1-700GB",
+        "sc1-800GB",
+        "sc1-900GB",
+        "sc1-1000GB",
+        "sc1-2000GB",
+        "sc1-3000GB",
+        "sc1-4000GB",
+        "sc1-5000GB",
+        "sc1-6000GB",
+        "sc1-7000GB",
+        "sc1-8000GB",
+        "sc1-9000GB",
+        "sc1-10000GB",
+        "sc1-11000GB",
+        "sc1-12000GB",
+        "sc1-13000GB",
+        "sc1-14000GB",
+        "sc1-15000GB",
+        "sc1-16000GB"
+      ],
+      "ConstraintDescription": "Must be a valid EBS Size."
+    },
+    "MetaDataVolumeMap": {
+      "Description": "[Required]:: P4D EBS MetaData Volume in GiB:: General Purpose SSD: gp2, Provisioned IOPS SSD: io1, Throughput Optimized HDD: st1, Cold HDD **sc1. **Not Tested, 1: https://aws.amazon.com/ebs/pricing/ 2: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html",
+      "Type": "String",
+      "Default": "gp2-20GB",
+      "AllowedValues": [
+        "gp2-20GB",
+        "gp2-50GB",
+        "gp2-80GB",
+        "gp2-100GB",
+        "gp2-200GB",
+        "gp2-300GB",
+        "gp2-400GB",
+        "gp2-500GB",
+        "gp2-600GB",
+        "gp2-700GB",
+        "gp2-800GB",
+        "gp2-900GB",
+        "gp2-1000GB",
+        "gp2-2000GB",
+        "gp2-3000GB",
+        "gp2-4000GB",
+        "gp2-5000GB",
+        "gp2-6000GB",
+        "gp2-7000GB",
+        "gp2-8000GB",
+        "gp2-9000GB",
+        "gp2-10000GB",
+        "gp2-11000GB",
+        "gp2-12000GB",
+        "gp2-13000GB",
+        "gp2-14000GB",
+        "gp2-15000GB",
+        "gp2-16000GB",
+        "io1-20GB",
+        "io1-50GB",
+        "io1-80GB",
+        "io1-100GB",
+        "io1-200GB",
+        "io1-300GB",
+        "io1-400GB",
+        "io1-500GB",
+        "io1-600GB",
+        "io1-700GB",
+        "io1-800GB",
+        "io1-900GB",
+        "io1-1000GB",
+        "io1-2000GB",
+        "io1-3000GB",
+        "io1-4000GB",
+        "io1-5000GB",
+        "io1-6000GB",
+        "io1-7000GB",
+        "io1-8000GB",
+        "io1-9000GB",
+        "io1-10000GB",
+        "io1-11000GB",
+        "io1-12000GB",
+        "io1-13000GB",
+        "io1-14000GB",
+        "io1-15000GB",
+        "io1-16000GB",
+        "st1-500GB",
+        "st1-600GB",
+        "st1-700GB",
+        "st1-800GB",
+        "st1-900GB",
+        "st1-1000GB",
+        "st1-2000GB",
+        "st1-3000GB",
+        "st1-4000GB",
+        "st1-5000GB",
+        "st1-6000GB",
+        "st1-7000GB",
+        "st1-8000GB",
+        "st1-9000GB",
+        "st1-10000GB",
+        "st1-11000GB",
+        "st1-12000GB",
+        "st1-13000GB",
+        "st1-14000GB",
+        "st1-15000GB",
+        "st1-16000GB",
+        "sc1-500GB",
+        "sc1-600GB",
+        "sc1-700GB",
+        "sc1-800GB",
+        "sc1-900GB",
+        "sc1-1000GB",
+        "sc1-2000GB",
+        "sc1-3000GB",
+        "sc1-4000GB",
+        "sc1-5000GB",
+        "sc1-6000GB",
+        "sc1-7000GB",
+        "sc1-8000GB",
+        "sc1-9000GB",
+        "sc1-10000GB",
+        "sc1-11000GB",
+        "sc1-12000GB",
+        "sc1-13000GB",
+        "sc1-14000GB",
+        "sc1-15000GB",
+        "sc1-16000GB"
+      ],
+      "ConstraintDescription": "Must be a valid EBS Size."
+    },
+    "MetaDataVolIopsForIo1": {
+      "Description": "[io1 Required]:: IOPS for EBS Volume Type of (io1) Provisioned IOPS SSD, *Has AWS Storage Cost Impact!, 1: https://aws.amazon.com/ebs/pricing 2: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html",
+      "Type": "String",
+      "AllowedPattern": "^[0-9]*$"
+    },
+    "ArchiveVolIopsForIo1": {
+      "Description": "[io1 Required]:: IOPS for EBS Volume Type of (io1) Provisioned IOPS SSD, *Has AWS Storage Cost Impact!, 1: https://aws.amazon.com/ebs/pricing 2: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html",
+      "Type": "String",
+      "AllowedPattern": "^[0-9]*$"
+    },
+    "InstanceType": {
+      "Description": "[Required]:: MainInstance EC2 instance type",
+      "Type": "String",
+      "Default": "t2.micro",
+      "AllowedValues": [
+        "t1.micro",
+        "t2.micro",
+        "t2.small",
+        "t2.medium",
+        "m1.small",
+        "m1.medium",
+        "m1.large",
+        "m1.xlarge",
+        "m2.xlarge",
+        "m2.2xlarge",
+        "m2.4xlarge",
+        "m3.medium",
+        "m3.large",
+        "m3.xlarge",
+        "m3.2xlarge",
+        "c1.medium",
+        "c1.xlarge",
+        "c3.large",
+        "c3.xlarge",
+        "c3.2xlarge",
+        "c3.4xlarge",
+        "c3.8xlarge",
+        "c4.large",
+        "c4.xlarge",
+        "c4.2xlarge",
+        "c4.4xlarge",
+        "c4.8xlarge",
+        "g2.2xlarge",
+        "r3.large",
+        "r3.xlarge",
+        "r3.2xlarge",
+        "r3.4xlarge",
+        "r3.8xlarge",
+        "i2.xlarge",
+        "i2.2xlarge",
+        "i2.4xlarge",
+        "i2.8xlarge",
+        "d2.xlarge",
+        "d2.2xlarge",
+        "d2.4xlarge",
+        "d2.8xlarge",
+        "hi1.4xlarge",
+        "hs1.8xlarge",
+        "cr1.8xlarge",
+        "cc2.8xlarge",
+        "cg1.4xlarge"
+      ],
+      "ConstraintDescription": "must be a valid EC2 instance type."
+    },
+    "InstanceTypeP4D": {
+      "Description": "[Required]:: P4D Instance EC2 instance type",
+      "Type": "String",
+      "Default": "t2.micro",
+      "AllowedValues": [
+        "t1.micro",
+        "t2.micro",
+        "t2.small",
+        "t2.medium",
+        "m1.small",
+        "m1.medium",
+        "m1.large",
+        "m1.xlarge",
+        "m2.xlarge",
+        "m2.2xlarge",
+        "m2.4xlarge",
+        "m3.medium",
+        "m3.large",
+        "m3.xlarge",
+        "m3.2xlarge",
+        "c1.medium",
+        "c1.xlarge",
+        "c3.large",
+        "c3.xlarge",
+        "c3.2xlarge",
+        "c3.4xlarge",
+        "c3.8xlarge",
+        "c4.large",
+        "c4.xlarge",
+        "c4.2xlarge",
+        "c4.4xlarge",
+        "c4.8xlarge",
+        "g2.2xlarge",
+        "r3.large",
+        "r3.xlarge",
+        "r3.2xlarge",
+        "r3.4xlarge",
+        "r3.8xlarge",
+        "i2.xlarge",
+        "i2.2xlarge",
+        "i2.4xlarge",
+        "i2.8xlarge",
+        "d2.xlarge",
+        "d2.2xlarge",
+        "d2.4xlarge",
+        "d2.8xlarge",
+        "hi1.4xlarge",
+        "hs1.8xlarge",
+        "cr1.8xlarge",
+        "cc2.8xlarge",
+        "cg1.4xlarge"
+      ],
+      "ConstraintDescription": "must be a valid EC2 instance type."
+    },
+    "EnvironmentType": {
+      "Description": "[Required]:: Type of Environment to deploy: [Production]: Ready for preexisting Public Route53 Zone and Elastic IP Services. [Evaluation]: Ready for Software Evaluation at minimal costs. [Development]: Ready for Stack modifications.",
+      "Type": "String",
+      "Default": "Evaluation",
+      "AllowedValues": [
+        "Production",
+        "Evaluation",
+        "Development"
+      ],
+      "ConstraintDescription": "Must specify Production, Evaluation, or Development."
+    },
+    "RegistrationEMailAddress": {
+      "Description": "[Required]:: Your EMail Address used for License and Registration of Perforce Helix Software and Services",
+      "Type": "String",
+      "AllowedPattern": "([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)",
+      "ConstraintDescription": "Must be a valid EMail Address"
+    },
+    "AvailabilityZone": {
+      "Description": "[Required]:: AWS EC2 Availability Zone",
+      "Type": "AWS::EC2::AvailabilityZone::Name"
+    },
+    "KeyName": {
+      "Description": "[Required]:: Name of an EC2 KeyPair to enable SSH access to the instance.",
+      "Type": "AWS::EC2::KeyPair::KeyName",
+      "ConstraintDescription": "must be the name of an existing EC2 KeyPair."
+    },
+    "SSHLocation": {
+      "Description": "The IP address range that can be used to access the web server using SSH.",
+      "Type": "String",
+      "MinLength": "9",
+      "MaxLength": "18",
+      "Default": "107.1.244.0/24",
+      "AllowedPattern": "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})",
+      "ConstraintDescription": "must be a valid IP CIDR range of the form x.x.x.x/x."
+    },
+    "P4DSuperPass": {
+      "NoEcho": "true",
+      "Description": "[Required]:: The P4D Super account password, minimum 8 characters and at least 1 uppercase alphabet, 1 lowercase alphabet and 1 number",
+      "Type": "String",
+      "MinLength": "8",
+      "MaxLength": "1024",
+      "AllowedPattern" : "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$"
+    },
+    "SiteName": {
+      "Description": "[Production]:: *The DNS short name for an existing Amazon Route53 Domain | [Evaluation]: Leave empty. | [Development]: Leave empty. | [Example]: helix-cloud",
+      "Type": "String",
+      "AllowedPattern": "^[_A-Za-z0-9][-A-Za-z0-9]*[A-Za-z0-9]$|^$",
+      "ConstraintDescription": "Must be a valid HostName"
+    },
+    "HostedZone": {
+      "Description": "[Production]:: *The Domain of an pre-existing Amazon Route53 hosted zone. | [Evaluation]: Leave empty. | [Development]: Leave empty. | [Example]: perforce.com ",
+      "Type": "String",
+      "AllowedPattern": "^(?!-)[a-zA-Z0-9-.]{1,63}(?<!-)$|^$",
+      "ConstraintDescription": "Production:: Must be a valid Public Domain that is available in Route53 | Evaluation: NULL | Development: NULL"
+    }
+  },
+  "Mappings": {
+    "AWSInstanceType2Arch": {
+      "t1.micro": {
+        "Arch": "PV64"
+      },
+      "t2.micro": {
+        "Arch": "HVM64"
+      },
+      "t2.small": {
+        "Arch": "HVM64"
+      },
+      "t2.medium": {
+        "Arch": "HVM64"
+      },
+      "m1.small": {
+        "Arch": "PV64"
+      },
+      "m1.medium": {
+        "Arch": "PV64"
+      },
+      "m1.large": {
+        "Arch": "PV64"
+      },
+      "m1.xlarge": {
+        "Arch": "PV64"
+      },
+      "m2.xlarge": {
+        "Arch": "PV64"
+      },
+      "m2.2xlarge": {
+        "Arch": "PV64"
+      },
+      "m2.4xlarge": {
+        "Arch": "PV64"
+      },
+      "m3.medium": {
+        "Arch": "HVM64"
+      },
+      "m3.large": {
+        "Arch": "HVM64"
+      },
+      "m3.xlarge": {
+        "Arch": "HVM64"
+      },
+      "m3.2xlarge": {
+        "Arch": "HVM64"
+      },
+      "c1.medium": {
+        "Arch": "PV64"
+      },
+      "c1.xlarge": {
+        "Arch": "PV64"
+      },
+      "c3.large": {
+        "Arch": "HVM64"
+      },
+      "c3.xlarge": {
+        "Arch": "HVM64"
+      },
+      "c3.2xlarge": {
+        "Arch": "HVM64"
+      },
+      "c3.4xlarge": {
+        "Arch": "HVM64"
+      },
+      "c3.8xlarge": {
+        "Arch": "HVM64"
+      },
+      "c4.large": {
+        "Arch": "HVM64"
+      },
+      "c4.xlarge": {
+        "Arch": "HVM64"
+      },
+      "c4.2xlarge": {
+        "Arch": "HVM64"
+      },
+      "c4.4xlarge": {
+        "Arch": "HVM64"
+      },
+      "c4.8xlarge": {
+        "Arch": "HVM64"
+      },
+      "g2.2xlarge": {
+        "Arch": "HVMG2"
+      },
+      "r3.large": {
+        "Arch": "HVM64"
+      },
+      "r3.xlarge": {
+        "Arch": "HVM64"
+      },
+      "r3.2xlarge": {
+        "Arch": "HVM64"
+      },
+      "r3.4xlarge": {
+        "Arch": "HVM64"
+      },
+      "r3.8xlarge": {
+        "Arch": "HVM64"
+      },
+      "i2.xlarge": {
+        "Arch": "HVM64"
+      },
+      "i2.2xlarge": {
+        "Arch": "HVM64"
+      },
+      "i2.4xlarge": {
+        "Arch": "HVM64"
+      },
+      "i2.8xlarge": {
+        "Arch": "HVM64"
+      },
+      "d2.xlarge": {
+        "Arch": "HVM64"
+      },
+      "d2.2xlarge": {
+        "Arch": "HVM64"
+      },
+      "d2.4xlarge": {
+        "Arch": "HVM64"
+      },
+      "d2.8xlarge": {
+        "Arch": "HVM64"
+      },
+      "hi1.4xlarge": {
+        "Arch": "HVM64"
+      },
+      "hs1.8xlarge": {
+        "Arch": "HVM64"
+      },
+      "cr1.8xlarge": {
+        "Arch": "HVM64"
+      },
+      "cc2.8xlarge": {
+        "Arch": "HVM64"
+      }
+    },
+    "AWSRegionArch2AMI": {
+      "us-east-1": {
+        "PV64": "ami-1ccae774",
+        "HVM64": "ami-1ecae776",
+        "HVMG2": "ami-8c6b40e4"
+      },
+      "us-west-2": {
+        "PV64": "ami-ff527ecf",
+        "HVM64": "ami-e7527ed7",
+        "HVMG2": "ami-abbe919b"
+      },
+      "us-west-1": {
+        "PV64": "ami-d514f291",
+        "HVM64": "ami-d114f295",
+        "HVMG2": "ami-f31ffeb7"
+      },
+      "eu-west-1": {
+        "PV64": "ami-bf0897c8",
+        "HVM64": "ami-a10897d6",
+        "HVMG2": "ami-d5bc24a2"
+      },
+      "eu-central-1": {
+        "PV64": "ami-ac221fb1",
+        "HVM64": "ami-a8221fb5",
+        "HVMG2": "ami-7cd2ef61"
+      },
+      "ap-northeast-1": {
+        "PV64": "ami-27f90e27",
+        "HVM64": "ami-cbf90ecb",
+        "HVMG2": "ami-6318e863"
+      },
+      "ap-southeast-1": {
+        "PV64": "ami-acd9e8fe",
+        "HVM64": "ami-68d8e93a",
+        "HVMG2": "ami-3807376a"
+      },
+      "ap-southeast-2": {
+        "PV64": "ami-ff9cecc5",
+        "HVM64": "ami-fd9cecc7",
+        "HVMG2": "ami-89790ab3"
+      },
+      "sa-east-1": {
+        "PV64": "ami-bb2890a6",
+        "HVM64": "ami-b52890a8",
+        "HVMG2": "NOT_SUPPORTED"
+      },
+      "cn-north-1": {
+        "PV64": "ami-fa39abc3",
+        "HVM64": "ami-f239abcb",
+        "HVMG2": "NOT_SUPPORTED"
+      }
+    },
+    "Environments": {
+      "Evaluation": {
+        "ValueTags": "Eval"
+      },
+      "Production": {
+        "ValueTags": "Prod"
+      },
+      "Development": {
+        "ValueTags": "Dev"
+      }
+    },
+    "VolumeTypeMap": {
+      "gp2-20GB": {
+        "VolumeSize": "20",
+        "VolumeType": "gp2"
+      },
+      "gp2-50GB": {
+        "VolumeSize": "50",
+        "VolumeType": "gp2"
+      },
+      "gp2-80GB": {
+        "VolumeSize": "80",
+        "VolumeType": "gp2"
+      },
+      "gp2-100GB": {
+        "VolumeSize": "100",
+        "VolumeType": "gp2"
+      },
+      "gp2-200GB": {
+        "VolumeSize": "200",
+        "VolumeType": "gp2"
+      },
+      "gp2-300GB": {
+        "VolumeSize": "300",
+        "VolumeType": "gp2"
+      },
+      "gp2-400GB": {
+        "VolumeSize": "400",
+        "VolumeType": "gp2"
+      },
+      "gp2-500GB": {
+        "VolumeSize": "500",
+        "VolumeType": "gp2"
+      },
+      "gp2-600GB": {
+        "VolumeSize": "600",
+        "VolumeType": "gp2"
+      },
+      "gp2-700GB": {
+        "VolumeSize": "700",
+        "VolumeType": "gp2"
+      },
+      "gp2-800GB": {
+        "VolumeSize": "800",
+        "VolumeType": "gp2"
+      },
+      "gp2-900GB": {
+        "VolumeSize": "900",
+        "VolumeType": "gp2"
+      },
+      "gp2-1000GB": {
+        "VolumeSize": "1000",
+        "VolumeType": "gp2"
+      },
+      "gp2-2000GB": {
+        "VolumeSize": "2000",
+        "VolumeType": "gp2"
+      },
+      "gp2-3000GB": {
+        "VolumeSize": "3000",
+        "VolumeType": "gp2"
+      },
+      "gp2-4000GB": {
+        "VolumeSize": "4000",
+        "VolumeType": "gp2"
+      },
+      "gp2-5000GB": {
+        "VolumeSize": "5000",
+        "VolumeType": "gp2"
+      },
+      "gp2-6000GB": {
+        "VolumeSize": "6000",
+        "VolumeType": "gp2"
+      },
+      "gp2-7000GB": {
+        "VolumeSize": "7000",
+        "VolumeType": "gp2"
+      },
+      "gp2-8000GB": {
+        "VolumeSize": "8000",
+        "VolumeType": "gp2"
+      },
+      "gp2-9000GB": {
+        "VolumeSize": "9000",
+        "VolumeType": "gp2"
+      },
+      "gp2-10000GB": {
+        "VolumeSize": "10000",
+        "VolumeType": "gp2"
+      },
+      "gp2-11000GB": {
+        "VolumeSize": "11000",
+        "VolumeType": "gp2"
+      },
+      "gp2-12000GB": {
+        "VolumeSize": "12000",
+        "VolumeType": "gp2"
+      },
+      "gp2-13000GB": {
+        "VolumeSize": "13000",
+        "VolumeType": "gp2"
+      },
+      "gp2-14000GB": {
+        "VolumeSize": "14000",
+        "VolumeType": "gp2"
+      },
+      "gp2-15000GB": {
+        "VolumeSize": "15000",
+        "VolumeType": "gp2"
+      },
+      "gp2-16000GB": {
+        "VolumeSize": "16000",
+        "VolumeType": "gp2"
+      },
+      "io1-20GB": {
+        "VolumeSize": "20",
+        "VolumeType": "io1"
+      },
+      "io1-50GB": {
+        "VolumeSize": "50",
+        "VolumeType": "io1"
+      },
+      "io1-80GB": {
+        "VolumeSize": "80",
+        "VolumeType": "io1"
+      },
+      "io1-100GB": {
+        "VolumeSize": "100",
+        "VolumeType": "io1"
+      },
+      "io1-200GB": {
+        "VolumeSize": "200",
+        "VolumeType": "io1"
+      },
+      "io1-300GB": {
+        "VolumeSize": "300",
+        "VolumeType": "io1"
+      },
+      "io1-400GB": {
+        "VolumeSize": "400",
+        "VolumeType": "io1"
+      },
+      "io1-500GB": {
+        "VolumeSize": "500",
+        "VolumeType": "io1"
+      },
+      "io1-600GB": {
+        "VolumeSize": "600",
+        "VolumeType": "io1"
+      },
+      "io1-700GB": {
+        "VolumeSize": "700",
+        "VolumeType": "io1"
+      },
+      "io1-800GB": {
+        "VolumeSize": "800",
+        "VolumeType": "io1"
+      },
+      "io1-900GB": {
+        "VolumeSize": "900",
+        "VolumeType": "io1"
+      },
+      "io1-1000GB": {
+        "VolumeSize": "1000",
+        "VolumeType": "io1"
+      },
+      "io1-2000GB": {
+        "VolumeSize": "2000",
+        "VolumeType": "io1"
+      },
+      "io1-3000GB": {
+        "VolumeSize": "3000",
+        "VolumeType": "io1"
+      },
+      "io1-4000GB": {
+        "VolumeSize": "4000",
+        "VolumeType": "io1"
+      },
+      "io1-5000GB": {
+        "VolumeSize": "5000",
+        "VolumeType": "io1"
+      },
+      "io1-6000GB": {
+        "VolumeSize": "6000",
+        "VolumeType": "io1"
+      },
+      "io1-7000GB": {
+        "VolumeSize": "7000",
+        "VolumeType": "io1"
+      },
+      "io1-8000GB": {
+        "VolumeSize": "8000",
+        "VolumeType": "io1"
+      },
+      "io1-9000GB": {
+        "VolumeSize": "9000",
+        "VolumeType": "io1"
+      },
+      "io1-10000GB": {
+        "VolumeSize": "10000",
+        "VolumeType": "io1"
+      },
+      "io1-11000GB": {
+        "VolumeSize": "11000",
+        "VolumeType": "io1"
+      },
+      "io1-12000GB": {
+        "VolumeSize": "12000",
+        "VolumeType": "io1"
+      },
+      "io1-13000GB": {
+        "VolumeSize": "13000",
+        "VolumeType": "io1"
+      },
+      "io1-14000GB": {
+        "VolumeSize": "14000",
+        "VolumeType": "io1"
+      },
+      "io1-15000GB": {
+        "VolumeSize": "15000",
+        "VolumeType": "io1"
+      },
+      "io1-16000GB": {
+        "VolumeSize": "16000",
+        "VolumeType": "io1"
+      },
+      "st1-500GB": {
+        "VolumeSize": "500",
+        "VolumeType": "st1"
+      },
+      "st1-600GB": {
+        "VolumeSize": "600",
+        "VolumeType": "st1"
+      },
+      "st1-700GB": {
+        "VolumeSize": "700",
+        "VolumeType": "st1"
+      },
+      "st1-800GB": {
+        "VolumeSize": "800",
+        "VolumeType": "st1"
+      },
+      "st1-900GB": {
+        "VolumeSize": "900",
+        "VolumeType": "st1"
+      },
+      "st1-1000GB": {
+        "VolumeSize": "1000",
+        "VolumeType": "st1"
+      },
+      "st1-2000GB": {
+        "VolumeSize": "2000",
+        "VolumeType": "st1"
+      },
+      "st1-3000GB": {
+        "VolumeSize": "3000",
+        "VolumeType": "st1"
+      },
+      "st1-4000GB": {
+        "VolumeSize": "4000",
+        "VolumeType": "st1"
+      },
+      "st1-5000GB": {
+        "VolumeSize": "5000",
+        "VolumeType": "st1"
+      },
+      "st1-6000GB": {
+        "VolumeSize": "6000",
+        "VolumeType": "st1"
+      },
+      "st1-7000GB": {
+        "VolumeSize": "7000",
+        "VolumeType": "st1"
+      },
+      "st1-8000GB": {
+        "VolumeSize": "8000",
+        "VolumeType": "st1"
+      },
+      "st1-9000GB": {
+        "VolumeSize": "9000",
+        "VolumeType": "st1"
+      },
+      "st1-10000GB": {
+        "VolumeSize": "10000",
+        "VolumeType": "st1"
+      },
+      "st1-11000GB": {
+        "VolumeSize": "11000",
+        "VolumeType": "st1"
+      },
+      "st1-12000GB": {
+        "VolumeSize": "12000",
+        "VolumeType": "st1"
+      },
+      "st1-13000GB": {
+        "VolumeSize": "13000",
+        "VolumeType": "st1"
+      },
+      "st1-14000GB": {
+        "VolumeSize": "14000",
+        "VolumeType": "st1"
+      },
+      "st1-15000GB": {
+        "VolumeSize": "15000",
+        "VolumeType": "st1"
+      },
+      "st1-16000GB": {
+        "VolumeSize": "16000",
+        "VolumeType": "st1"
+      },
+      "sc1-500GB": {
+        "VolumeSize": "500",
+        "VolumeType": "sc1"
+      },
+      "sc1-600GB": {
+        "VolumeSize": "600",
+        "VolumeType": "sc1"
+      },
+      "sc1-700GB": {
+        "VolumeSize": "700",
+        "VolumeType": "sc1"
+      },
+      "sc1-800GB": {
+        "VolumeSize": "800",
+        "VolumeType": "sc1"
+      },
+      "sc1-900GB": {
+        "VolumeSize": "900",
+        "VolumeType": "sc1"
+      },
+      "sc1-1000GB": {
+        "VolumeSize": "1000",
+        "VolumeType": "sc1"
+      },
+      "sc1-2000GB": {
+        "VolumeSize": "2000",
+        "VolumeType": "sc1"
+      },
+      "sc1-3000GB": {
+        "VolumeSize": "3000",
+        "VolumeType": "sc1"
+      },
+      "sc1-4000GB": {
+        "VolumeSize": "4000",
+        "VolumeType": "sc1"
+      },
+      "sc1-5000GB": {
+        "VolumeSize": "5000",
+        "VolumeType": "sc1"
+      },
+      "sc1-6000GB": {
+        "VolumeSize": "6000",
+        "VolumeType": "sc1"
+      },
+      "sc1-7000GB": {
+        "VolumeSize": "7000",
+        "VolumeType": "sc1"
+      },
+      "sc1-8000GB": {
+        "VolumeSize": "8000",
+        "VolumeType": "sc1"
+      },
+      "sc1-9000GB": {
+        "VolumeSize": "9000",
+        "VolumeType": "sc1"
+      },
+      "sc1-10000GB": {
+        "VolumeSize": "10000",
+        "VolumeType": "sc1"
+      },
+      "sc1-11000GB": {
+        "VolumeSize": "11000",
+        "VolumeType": "sc1"
+      },
+      "sc1-12000GB": {
+        "VolumeSize": "12000",
+        "VolumeType": "sc1"
+      },
+      "sc1-13000GB": {
+        "VolumeSize": "13000",
+        "VolumeType": "sc1"
+      },
+      "sc1-14000GB": {
+        "VolumeSize": "14000",
+        "VolumeType": "sc1"
+      },
+      "sc1-15000GB": {
+        "VolumeSize": "15000",
+        "VolumeType": "sc1"
+      },
+      "sc1-16000GB": {
+        "VolumeSize": "16000",
+        "VolumeType": "sc1"
+      }
+    }
+  },
+  "Outputs": {
+    "EnvironmentType": {
+      "Description": "Deployment Type.",
+      "Value": {
+        "Ref": "EnvironmentType"
+      }
+    },
+    "RegistrationEMailAddress": {
+      "Description": "Registration EMail Address.",
+      "Value": {
+        "Ref": "RegistrationEMailAddress"
+      }
+    },
+    "HostedZone": {
+      "Description": "Route 53 Domain.",
+      "Condition": "ProdNotify",
+      "Value": {
+        "Ref": "HostedZone"
+      }
+    },
+    "SiteName": {
+      "Description": "Site name.",
+      "Condition": "ProdNotify",
+      "Value": {
+        "Ref": "SiteName"
+      }
+    },
+    "HostedZoneFQDN": {
+      "Description": "FQDN.",
+      "Condition": "ProdNotify",
+      "Value": {
+        "Ref": "HostRecord"
+      }
+    },
+    "PublicIp": {
+      "Description": "Public IP Address for your Deployment.",
+      "Value": {
+        "Fn::GetAtt": [
+          "MainInstance",
+          "PublicIp"
+        ]
+      }
+    },
+    "PrivateIpMainInstance": {
+      "Description": "Private IP Address for MainInstance.",
+      "Condition": "DevNotify",
+      "Value": {
+        "Fn::GetAtt": [
+          "MainInstance",
+          "PrivateIp"
+        ]
+      }
+    },
+    "PrivateIpAppInstance": {
+      "Description": "Private IP Address for AppInstance.",
+      "Condition": "DevNotify",
+      "Value": {
+        "Fn::GetAtt": [
+          "AppInstance",
+          "PrivateIp"
+        ]
+      }
+    },
+    "PrivateIpP4D": {
+      "Description": "Private IP Address for P4D.",
+      "Condition": "DevNotify",
+      "Value": {
+        "Fn::GetAtt": [
+          "P4D",
+          "PrivateIp"
+        ]
+      }
+    },
+    "PrivateDnsNameMainInstance": {
+      "Description": "Private Domain Name.",
+      "Condition": "DevNotify",
+      "Value": {
+        "Fn::GetAtt": [
+          "MainInstance",
+          "PrivateDnsName"
+        ]
+      }
+    },
+    "PrivateDnsNameAppInstance": {
+      "Description": "Private Domain Name.",
+      "Condition": "DevNotify",
+      "Value": {
+        "Fn::GetAtt": [
+          "AppInstance",
+          "PrivateDnsName"
+        ]
+      }
+    },
+    "PrivateDnsNameP4D": {
+      "Description": "Private Domain Name.",
+      "Condition": "DevNotify",
+      "Value": {
+        "Fn::GetAtt": [
+          "P4D",
+          "PrivateDnsName"
+        ]
+      }
+    },
+    "PublicDnsMainInstance": {
+      "Description": "Public Domain Name for your deployment.",
+      "Value": {
+        "Fn::If": [
+          "ProdNotify",
+          {
+            "Ref": "HostRecord"
+          },
+          {
+            "Fn::GetAtt": [
+              "MainInstance",
+              "PublicDnsName"
+            ]
+          }
+        ]
+      }
+    },
+    "AvailabilityZoneMainInstance": {
+      "Description": "MainInstance Deployed to Availability Zone.",
+      "Value": {
+        "Fn::GetAtt": [
+          "AppInstance",
+          "AvailabilityZone"
+        ]
+      }
+    },
+    "AvailabilityZoneAppInstance": {
+      "Description": "AppInstance Deployed to Availability Zone.",
+      "Value": {
+        "Fn::GetAtt": [
+          "AppInstance",
+          "AvailabilityZone"
+        ]
+      }
+    },
+    "AvailabilityZoneP4D": {
+      "Description": "P4D Deployed to Availability Zone.",
+      "Value": {
+        "Fn::GetAtt": [
+          "P4D",
+          "AvailabilityZone"
+        ]
+      }
+    },
+    "URL": {
+      "Description": "Perforce Helix application URL.",
+      "Value": {
+        "Fn::If": [
+          "ProdNotify",
+          {
+            "Fn::Join": [
+              "",
+              [
+                "https://",
+                {
+                  "Ref": "HostRecord"
+                }
+              ]
+            ]
+          },
+          {
+            "Fn::Join": [
+              "",
+              [
+                "https://",
+                {
+                  "Fn::GetAtt": [
+                    "MainInstance",
+                    "PublicDnsName"
+                  ]
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    "P4PORT": {
+      "Description": "Perforce P4PORT.",
+      "Value": {
+        "Fn::If": [
+          "ProdNotify",
+          {
+            "Fn::Join": [
+              "",
+              [
+                "ssl:",
+                {
+                  "Ref": "HostRecord"
+                },
+                ":1667"
+              ]
+            ]
+          },
+          {
+            "Fn::Join": [
+              "",
+              [
+                "ssl:",
+                {
+                  "Fn::GetAtt": [
+                    "MainInstance",
+                    "PublicIp"
+                  ]
+                },
+                ":1667"
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

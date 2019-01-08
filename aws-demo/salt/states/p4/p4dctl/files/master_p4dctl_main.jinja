@@ -1,0 +1,27 @@
+Environment
+{
+  PATH              = /bin:/usr/bin:/usr/local/bin
+}
+
+p4broker broker-ssl
+{
+  Owner             = perforce
+  Execute           = /opt/perforce/sbin/p4broker
+
+  Environment
+  {
+    P4SSLDIR = "/etc/perforce/sslkeys"
+    P4BROKEROPTIONS = "-c /etc/perforce/p4broker-ssl.conf"
+  }
+}
+
+p4broker broker
+{
+  Owner             = perforce
+  Execute           = /opt/perforce/sbin/p4broker
+
+  Environment
+  {
+    P4BROKEROPTIONS = "-c /etc/perforce/p4broker.conf"
+  }
+}

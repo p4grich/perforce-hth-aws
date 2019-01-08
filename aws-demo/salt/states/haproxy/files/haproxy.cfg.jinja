@@ -1,0 +1,83 @@
+#
+#
+# Warning:  This file is managed by Salt. DO NOT EDIT. Any changes will be
+#           overridden.
+#
+# See the haproxy(1) manpage for details.
+
+# Define global rules that apply to all node definitions.
+global
+  # Run haproxy as a daemon process.
+  daemon
+
+  # Set the haproxy jail directory. This allows the process to run in a safe
+  # mode, helping to prevent exploitations in the server.
+  chroot      /var/lib/haproxy
+
+  # Set the process pidfile location.
+  pidfile     /var/run/haproxy.pid
+
+  # Config the log write destination.
+  log         127.0.0.1 local0
+
+  # Set a global maximum of conncurrent connections overrideable by child
+  # configs.
+  maxconn     4000
+
+  # Configure write location of haproxy stats.
+  stats       socket /var/lib/haproxy/stats
+
+  # Set the user and group of the haproxy process.
+  user        haproxy
+  group       haproxy
+
+# Configure defaults for all following section definitions.
+defaults
+  # Configure the default log location. For example, a value of 'global' will
+  # use the globally configured logger.
+  log         global
+
+  # Configure stat aggregation and rendering.
+  listen stats :9000 #Listen on localhost port 9000
+  mode http
+  stats enable # Enable statistics
+  stats hide-version # Hide HAPRoxy version
+  stats uri /haproxy 
+  # stats realm Haproxy\ Statistics # Show this text in authentication popup
+  # stats auth Username:Password
+
+  # Optionally override the max connections defined in the 'global' section.
+  maxconn     4000
+
+  # Default the number of retries to be made against a particular backend in
+  # the event initial connections fail.
+  retries     1
+
+  # Configure default timeouts for connection types.
+  timeout   http-request  10s
+  timeout   queue         1m
+  timeout   connect       10s
+  timeout   client        1m
+  timeout   server        10m
+  timeout   check         10s
+
+  # TODO: this isn't really doing the ssl part just yet, need to generate the keys
+listen p4broker-ssl
+  bind      *:1667
+  mode      tcp
+
+  timeout   connect       0m
+  timeout   client        0m
+  timeout   server        0m
+
+  server    master        127.0.0.1:8667
+
+listen perforce-swarm
+  bind      *:80
+  bind      *:443         ssl crt /etc/ssl/p4www.pem
+
+  timeout   connect       10s
+  timeout   client        10m
+  timeout   server        10m
+
+  server    app-host      {{ salt['mine.get']('app-host', 'network.interface_ip')['app-host'] }}:80
